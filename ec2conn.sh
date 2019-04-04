@@ -1,17 +1,5 @@
 #!/bin/sh
 
-if [ $1 = "start" ]; then
-    echo "Starting instance"
-    startInstance
-elif [ $1 = "login" ]; then
-    echo "login"
-    login
-elif [ $1 = "stop" ]; then
-    echo "Stopping instance"
-    stopInstance
-fi
-
-
 startInstance() {
     aws ec2 start-instances --instance-ids ${EC2_INSTANCE_ID}
 }
@@ -22,7 +10,17 @@ login() {
     ssh -i devenv-key.pem ubuntu@${ip}
 }
 
-
 stopInstance() {
     aws ec2 stop-instances --instance-ids ${EC2_INSTANCE_ID}
 }
+
+if [ $1 = "start" ]; then
+    echo "Starting instance"
+    startInstance
+elif [ $1 = "login" ]; then
+    echo "login"
+    login
+elif [ $1 = "stop" ]; then
+    echo "Stopping instance"
+    stopInstance
+fi
