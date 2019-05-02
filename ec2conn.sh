@@ -4,6 +4,11 @@ startInstance() {
     aws ec2 start-instances --instance-ids ${EC2_INSTANCE_ID}
 }
 
+showIp() {
+    ip=$(aws ec2 describe-instances --instance-ids ${EC2_INSTANCE_ID} --query "Reservations[0].Instances[0].PublicIpAddress")
+    echo ${ip}
+}
+
 login() {
     ip=$(aws ec2 describe-instances --instance-ids ${EC2_INSTANCE_ID} --query "Reservations[0].Instances[0].PublicIpAddress")
     echo ${ip}
@@ -17,6 +22,9 @@ stopInstance() {
 if [ $1 = "start" ]; then
     echo "Starting instance"
     startInstance
+elif [ $1 = "ip" ]; then
+    echo "show ip"
+    showIp
 elif [ $1 = "login" ]; then
     echo "login"
     login
