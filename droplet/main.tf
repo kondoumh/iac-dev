@@ -1,5 +1,5 @@
 provider "digitalocean" {
-  token=""
+  # export DIGITALOCEAN_TOKEN="Your API TOKEN"
 }
 
 resource "digitalocean_droplet" "dev" {
