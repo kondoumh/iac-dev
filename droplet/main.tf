@@ -3,9 +3,9 @@ provider "digitalocean" {
 }
 
 resource "digitalocean_droplet" "dev" {
-  image = "ubuntu-19-10-x64"
+  image = "${var.ubuntu}"
   name = "dev-1"
-  region = "sgp1"
+  region = "${var.do_sgp1}"
   size = "512mb"
   ssh_keys = []
 }
