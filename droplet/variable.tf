@@ -14,5 +14,5 @@ variable "ubuntu" {
 
 variable "centos" {
   description = "Default Centos"
-  default     = "centos-72-x64"
+  default     = "centos-7-x64"
 }
