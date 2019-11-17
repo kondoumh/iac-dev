@@ -10,6 +10,6 @@ resource "digitalocean_droplet" "dev" {
   image = "${var.ubuntu}"
   name = "dev-1"
   region = "${var.do_sgp1}"
-  size = "512mb"
+  size = "s-1vcpu-1gb"
   ssh_keys = [data.digitalocean_ssh_key.ssh_key.id]
 }
