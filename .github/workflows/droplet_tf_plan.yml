@@ -1,4 +1,4 @@
-name: Create droplet
+name: Terraform Plan for droplet
 
 on:
   pull_request:
