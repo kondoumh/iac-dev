@@ -20,7 +20,7 @@ jobs:
           tf_actions_working_dir: 'droplet'
           tf_actions_comment: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: 'Terraform Init'
         uses: hashicorp/terraform-github-actions@master
@@ -30,7 +30,7 @@ jobs:
           tf_actions_working_dir: 'droplet'
           tf_actions_comment: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
@@ -40,7 +40,7 @@ jobs:
           tf_actions_working_dir: 'droplet'
           tf_actions_comment: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: 'Terraform Plan'
         uses: hashicorp/terraform-github-actions@master
@@ -50,5 +50,5 @@ jobs:
           tf_actions_working_dir: 'droplet'
           tf_actions_comment: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
