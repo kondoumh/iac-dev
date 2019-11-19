@@ -3,7 +3,7 @@ name: Terraform Plan for droplet
 on:
   pull_request:
     paths:
-    - 'droplet/*.yml'
+    - 'droplet/*.tf'
 
 jobs:
   terraform:
