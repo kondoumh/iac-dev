@@ -8,7 +8,7 @@ data "digitalocean_ssh_key" "ssh_key" {
 
 resource "digitalocean_droplet" "dev" {
   image = "${var.ubuntu}"
-  name = "dev-01"
+  name = "dev-1"
   region = "${var.do_sgp1}"
   size = "s-1vcpu-1gb"
   ssh_keys = [data.digitalocean_ssh_key.ssh_key.id]
