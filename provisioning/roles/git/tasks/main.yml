@@ -1,0 +1,9 @@
+- name: git config
+  become: yes
+  yum: name=git state=latest
+- git_config: name=user.name scope=global value="{{ name }}"
+- git_config: name=user.email scope=global value="{{ email }}"
+- git_config: name=color.ui scope=global value=true
+- git_config: name=grep.lineNumber scope=global value=true
+- git_config: name=alias.find scope=global value="grep -H --heading --break"
+- git_config: name=core.editor scope=global value="vi -u NONE -N"
