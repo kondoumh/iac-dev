@@ -6,6 +6,9 @@ on:
   - .github/workflows/it_k8s.yml
 
 jobs:
+  strategy:
+    matrix:
+      k8s: [kindest/node:v1.14.9, kindest/node:v1.15.7]
   kind:
     runs-on: ubuntu-latest
     steps:
@@ -13,7 +16,7 @@ jobs:
     - uses: engineerd/setup-kind@v0.2.0
       with:
         config: "k8s/kind.yml"
-        image: kindest/node:v1.14.9
+        image: ${{ matrix.k8s }}
     - name: Testing
       run: |
         kubectl version
