@@ -15,6 +15,7 @@ jobs:
         config: "k8s/kind.yml"
     - name: Testing
       run: |
+        kubectl version
         kubectl cluster-info
         kubectl get node -o wide
         kubectl get pods -n kube-system
