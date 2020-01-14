@@ -9,7 +9,7 @@ jobs:
   kind:
     strategy:
       matrix:
-        k8s: [kindest/node:v1.14.9, kindest/node:v1.15.7]
+        k8s: [1.14.9, 1.15.7]
   
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +17,7 @@ jobs:
     - uses: engineerd/setup-kind@v0.2.0
       with:
         config: "k8s/kind.yml"
-        image: ${{ matrix.k8s }}
+        image: kindest/node:v${{ matrix.k8s }}
     - name: Testing
       run: |
         kubectl version
