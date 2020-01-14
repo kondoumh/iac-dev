@@ -11,7 +11,10 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: engineerd/setup-kind@v0.2.0
+      with:
+        config: "k8s/kind.yml"
     - name: Testing
       run: |
         kubectl cluster-info
+        kubectl get node -o wide
         kubectl get pods -n kube-system
