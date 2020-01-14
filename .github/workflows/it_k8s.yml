@@ -18,3 +18,5 @@ jobs:
         kubectl cluster-info
         kubectl get node -o wide
         kubectl get pods -n kube-system
+        kubectl apply -f k8s/nginx_deploy.yml
+        kubectl describe deployment nginx-deployment
