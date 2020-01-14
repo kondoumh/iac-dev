@@ -13,6 +13,7 @@ jobs:
     - uses: engineerd/setup-kind@v0.2.0
       with:
         config: "k8s/kind.yml"
+        image: kindest/node:v1.14.9
     - name: Testing
       run: |
         kubectl version
