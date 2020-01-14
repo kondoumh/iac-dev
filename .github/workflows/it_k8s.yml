@@ -1,0 +1,23 @@
+name: "Create cluster using KinD"
+on:
+ push:
+  paths:
+  - k8s/**
+  - .github/workflows/it_k8s.yml
+
+jobs:
+  kind:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: engineerd/setup-kind@v0.2.0
+      with:
+        config: "k8s/kind.yml"
+    - name: Testing
+      run: |
+        kubectl version
+        kubectl cluster-info
+        kubectl get node -o wide
+        kubectl get pods -n kube-system
+        kubectl apply -f k8s/nginx_deploy.yml
+        kubectl describe deployment nginx-deployment
