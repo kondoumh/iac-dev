@@ -6,10 +6,11 @@ on:
   - .github/workflows/it_k8s.yml
 
 jobs:
-  strategy:
-    matrix:
-      k8s: [kindest/node:v1.14.9, kindest/node:v1.15.7]
   kind:
+    strategy:
+      matrix:
+        k8s: [kindest/node:v1.14.9, kindest/node:v1.15.7]
+  
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
