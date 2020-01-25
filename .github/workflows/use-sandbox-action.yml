@@ -1,4 +1,4 @@
-name: "Create cluster using KinD"
+name: "Test sandbox action"
 on:
  push:
   paths:
