@@ -1,0 +1,18 @@
+name: "Create cluster using KinD"
+on:
+ push:
+  paths:
+  - .github/workflows/use-sandbox-action.yml
+
+jobs:
+  call_sandbox_action:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+    - name: sandbox action step
+      id: hello
+      uses: kondoumh/sandbox-action@master
+      with:
+        who-to-greet: 'Mona the Octocat'
+    - name: Get the output time
+      run: echo "The time was ${{ steps.hello.outputs.time }}"
