@@ -18,7 +18,7 @@ jobs:
       run: echo "The time was ${{ steps.hello.outputs.time }}"
     - name: sandbox docker action
       id: hello2
-      uses: kondoumh/sandbox-docker-action@master
+      uses: kondoumh/sandbox-container-action@master
       with:
         who-to-greet: 'Mona the Octocat'
     - name: Get the output time
