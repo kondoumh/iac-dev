@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - name: sandbox action step
+    - name: sandbox action
       id: hello
       uses: kondoumh/sandbox-action@master
       with:
