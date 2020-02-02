@@ -9,7 +9,7 @@ jobs:
   kind:
     strategy:
       matrix:
-        k8s: [1.14.9, 1.15.7]
+        k8s: [1.15.7]
   
     runs-on: ubuntu-latest
     steps:
@@ -20,6 +20,7 @@ jobs:
         image: kindest/node:v${{ matrix.k8s }}
     - name: Testing
       run: |
+        cat ~/.kube/config
         kubectl version
         kubectl cluster-info
         kubectl get node -o wide
