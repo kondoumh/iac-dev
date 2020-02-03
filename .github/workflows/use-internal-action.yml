@@ -2,7 +2,6 @@ name: "Use internal action"
 on:
  push:
   paths:
-  - k8s/**
   - .github/workflows/use-internal-action.yml
 
 jobs:
@@ -16,3 +15,6 @@ jobs:
         reppsitory: kondoumh/setup-helmfile
         token: ${{ secrets.GITHUB_TF_TOKEN }}
         path: actions
+    - name: Test
+      run: |
+        ls -l actions
