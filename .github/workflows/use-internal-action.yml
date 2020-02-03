@@ -17,9 +17,6 @@ jobs:
         repository: mamezou-tech/setup-helmfile
         token: ${{ secrets.GITHUB_TF_TOKEN }}
         path: setup-helmfile
-    - name: Test
-      run: |
-        ls -l setup-helmfile
     - name: Setup helmfile
       uses: ./setup-helmfile
       with:
