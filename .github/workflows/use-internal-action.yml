@@ -14,7 +14,7 @@ jobs:
     - name: Checkout internal action
       uses: actions/checkout@v2
       with:
-        repository: kondoumh/setup-helmfile
+        repository: mamezou-tech/setup-helmfile
         token: ${{ secrets.GITHUB_TF_TOKEN }}
         path: setup-helmfile
     - name: Test
