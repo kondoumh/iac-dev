@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Checkout internal action
+      uses: actions/checkout@v2
       with:
-        reppsitory: kondoumh/setup-helmfile
+        repository: kondoumh/setup-helmfile
         token: ${{ secrets.GITHUB_TF_TOKEN }}
         path: actions
     - name: Test
