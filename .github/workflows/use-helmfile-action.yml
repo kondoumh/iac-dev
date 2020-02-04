@@ -1,0 +1,18 @@
+name: Use helmfile
+on:
+  push:
+    paths:
+      - .github/workflows/use-helmfile-action.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup helmfile
+      uses: mamezou-tech/setup-helmfile@v0.1.0
+    - name: Test
+      run: |
+        helmfile --version
+        helm version
+        kubectl version --client
