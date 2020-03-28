@@ -1,0 +1,17 @@
+on:
+ push:
+  paths:
+  - .github/workflows/upload.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Create artifact
+      run: echo hello > hello.txt
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: hello-${{ github.run_number }}
+        path: ./hello.txt
