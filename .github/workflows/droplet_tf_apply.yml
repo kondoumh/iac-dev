@@ -22,5 +22,5 @@ jobs:
       - name: 'Terraform Init'
         run: cd droplet && terraform init
       - name: 'Terraform Apply'
-        run: cd droplet && terraform apply
+        run: cd droplet && terraform apply -auto-approve
         if: github.event.pull_request.merged == true
