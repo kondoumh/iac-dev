@@ -3,8 +3,6 @@ name: Terraform Plan for droplet
 on:
   pull_request:
     types: [opened]
-  push:
-    branches: [apply-setup-terraform]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
