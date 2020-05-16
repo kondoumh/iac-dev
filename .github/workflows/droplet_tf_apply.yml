@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [closed]
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
+  DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -11,24 +15,12 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@master
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.24
       - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.12.15
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: 'droplet'
-          tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+        run: cd droplet && terraform init
       - name: 'Terraform Apply'
+        run: cd droplet && terraform apply
         if: github.event.pull_request.merged == true
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.12.15
-          tf_actions_subcommand: 'apply'
-          tf_actions_working_dir: 'droplet'
-          tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}

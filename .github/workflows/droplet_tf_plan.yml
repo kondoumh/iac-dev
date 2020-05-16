@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened]
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
+  DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -17,16 +21,7 @@ jobs:
           terraform_version: 0.12.24
       - name: 'Terraform Init'
         run: cd droplet && terraform init
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: 'Terraform Validate'
         run: cd droplet && terraform validate
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       - name: 'Terraform Plan'
         run: cd droplet && terraform plan
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TF_TOKEN }}
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
