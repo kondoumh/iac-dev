@@ -7,17 +7,17 @@ on:
 
 jobs:
   kind:
-    strategy:
-      matrix:
-        k8s: [1.15.7]
+    # strategy:
+    #   matrix:
+    #     k8s: [1.15.7]
   
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: engineerd/setup-kind@v0.3.0
-      with:
-        config: "k8s/kind.yml"
-        image: kindest/node:v${{ matrix.k8s }}
+      # with:
+      #   config: "k8s/kind.yml"
+      #   image: kindest/node:v${{ matrix.k8s }}
     - name: Testing
       run: |
         cat ~/.kube/config
