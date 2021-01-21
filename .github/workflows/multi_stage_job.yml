@@ -42,5 +42,4 @@ jobs:
     - name: Notify to Slack channel
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_CHANNEL: kondoumh
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
