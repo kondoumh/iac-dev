@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+    paths:
+    - .github/workflows/deploy.yml
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo Build
+
+  TestA:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+    - run: echo Test A
+
+  TestB:
+    runs-on: ubuntu-latest
+    needs: Build
+    name: Run Test B
+    steps:
+    - run: echo Test B
+
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: [TestA, TestB]
+    steps:
+    - run: echo Deploy
