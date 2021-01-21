@@ -28,7 +28,6 @@ jobs:
     - name: Test B
       run: |
         echo Test B
-        exit 1
 
   Deploy:
     runs-on: ubuntu-latest
