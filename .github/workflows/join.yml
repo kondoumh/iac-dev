@@ -1,0 +1,22 @@
+name: Join Jobs
+on:
+  push:
+    paths:
+    - .github/workflows/join.yml
+
+jobs:
+  Build1:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo Build1
+
+  Build2:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo Build2
+
+  Teardown:
+    runs-on: ubuntu-latest
+    needs: [Build1, Build2]
+    steps:
+    - run: echo Teardown
