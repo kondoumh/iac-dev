@@ -1,0 +1,17 @@
+name: Sequential Jobs
+on:
+  push:
+    paths:
+    - .github/workflows/sequencial.yml
+
+jobs:
+  Build1:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo Build1
+
+  Build2:
+    runs-on: ubuntu-latest
+    needs: Build1
+    steps:
+    - run: echo Build2
