@@ -1,0 +1,23 @@
+name: Fork Jobs
+on:
+  push:
+    paths:
+    - .github/workflows/fork.yml
+
+jobs:
+  Setup:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo Setup
+
+  Build1:
+    runs-on: ubuntu-latest
+    needs: Setup
+    steps:
+    - run: echo Build1
+
+  Build2:
+    runs-on: ubuntu-latest
+    needs: Setup
+    steps:
+    - run: echo Build2
