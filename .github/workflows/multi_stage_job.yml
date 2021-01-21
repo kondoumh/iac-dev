@@ -47,7 +47,9 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_USERNAME: GitHUb Actions
-        SLACK_ICON: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
+        SLACK_TITLE: Workflow Succeeded
+        SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        SLACK_MESSAGE: 'Run number : ${{ GITHUB_RUN_NUMBER }}'
 
   Notify_failure:
     if: ${{ failure() }}
@@ -59,5 +61,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_USERNAME: GitHUb Actions
-        SLACK_ICON: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
+        SLACK_TITLE: Workflow failed
+        SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
         SLACK_COLOR: danger
+        SLACK_MESSAGE: 'Run number : ${{ GITHUB_RUN_NUMBER }}'
