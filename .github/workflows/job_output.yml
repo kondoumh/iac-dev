@@ -46,7 +46,7 @@ jobs:
 
   Aggregate:
     runs-on: ubuntu-latest
-    needs: Deploy
+    needs: [Build, TestA, Deploy]
     steps:
     - name: aggregate
       run: |
