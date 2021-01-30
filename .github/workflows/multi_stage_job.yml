@@ -8,39 +8,61 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     name: Build
+    outputs:
+      done: ${{ steps.check.outputs.message }}
     steps:
     - name: Build
       run: echo Build
+    - id: check
+      run: echo "::set-output name=message Build done"
 
   TestA:
     runs-on: ubuntu-latest
     needs: Build
+    outputs:
+      done: ${{ steps.check.outputs.message }}
     name: Run Test A
     steps:
     - name: Test A
       run: echo Test A
+    - id: check
+      run: echo "::set-output name=message Test A done"
 
   TestB:
     runs-on: ubuntu-latest
     needs: Build
+    outputs:
+      done: ${{ steps.check.outputs.message }}
     name: Run Test B
     steps:
     - name: Test B
       run: |
         echo Test B
+    - id: check
+      run: echo "::set-output name=message Test B done"
 
   Deploy:
     runs-on: ubuntu-latest
     needs: [TestA, TestB]
+    outputs:
+      done: ${{ steps.check.outputs.message }}
     steps:
     - name: Deploy
       run: echo Deploy
+    - id: check
+      run: echo "::set-output name=message Deploy done"
 
   Notify_succeed:
     if: ${{ success() }}
     runs-on: ubuntu-latest
-    needs: Deploy
+    needs: [Build, TestA, TestB, Deploy]
     steps:
+    - name: Aggregate
+      run: |
+        echo ${{ needs.Build.outputs.message }}
+        echo ${{ needs.TestA.outputs.message }}
+        echo ${{ needs.TestB.outputs.message }}
+        echo ${{ needs.Deploy.outputs.message }}
     - name: Notify to Slack channel
       uses: rtCamp/action-slack-notify@v2
       env:
@@ -53,8 +75,14 @@ jobs:
   Notify_failure:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
-    needs: Deploy
+    needs: [Build, TestA, TestB, Deploy]
     steps:
+    - name: Aggregate
+      run: |
+        echo ${{ needs.Build.outputs.message }}
+        echo ${{ needs.TestA.outputs.message }}
+        echo ${{ needs.TestB.outputs.message }}
+        echo ${{ needs.Deploy.outputs.message }}
     - name: Notify to Slack channel
       uses: rtCamp/action-slack-notify@v2
       env:
