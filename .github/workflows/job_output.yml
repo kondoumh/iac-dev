@@ -26,7 +26,7 @@ jobs:
     - name: Test A
       run: echo Test A
     - id: set-result
-      run: echo "::set-output name=result::TestA ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: echo "::set-output name=result::TestA ${{ job.status }}"
 
   TestB:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
         exit 1
     - id: set-result
       if: ${{ always() }}
-      run: echo "::set-output name=result::TestB ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: echo "::set-output name=result::TestB ${{ job.status }}"
 
   Deploy:
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
     - name: Deploy
       run: echo Deploy
     - id: set-result
-      run: echo "::set-output name=result::Deploy ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: echo "::set-output name=result::Deploy ${{ job.status }}"
 
   Aggregate:
     if: ${{ always() }}
