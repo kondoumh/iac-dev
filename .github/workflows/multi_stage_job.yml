@@ -59,10 +59,10 @@ jobs:
     steps:
     - name: Aggregate
       run: |
-        echo ${{ needs.Build.outputs.message }}
-        echo ${{ needs.TestA.outputs.message }}
-        echo ${{ needs.TestB.outputs.message }}
-        echo ${{ needs.Deploy.outputs.message }}
+        echo ${{ needs.Build.outputs.done }}
+        echo ${{ needs.TestA.outputs.done }}
+        echo ${{ needs.TestB.outputs.done }}
+        echo ${{ needs.Deploy.outputs.done }}
     - name: Notify to Slack channel
       uses: rtCamp/action-slack-notify@v2
       env:
@@ -79,10 +79,10 @@ jobs:
     steps:
     - name: Aggregate
       run: |
-        echo ${{ needs.Build.outputs.message }}
-        echo ${{ needs.TestA.outputs.message }}
-        echo ${{ needs.TestB.outputs.message }}
-        echo ${{ needs.Deploy.outputs.message }}
+        echo ${{ needs.Build.outputs.done }}
+        echo ${{ needs.TestA.outputs.done }}
+        echo ${{ needs.TestB.outputs.done }}
+        echo ${{ needs.Deploy.outputs.done }}
     - name: Notify to Slack channel
       uses: rtCamp/action-slack-notify@v2
       env:
