@@ -70,7 +70,7 @@ jobs:
         SLACK_USERNAME: GitHUb Actions
         SLACK_TITLE: Workflow Succeeded
         SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-        SLACK_MESSAGE: 'Run number : #${{ github.run_number }}'
+        SLACK_MESSAGE: 'Run number : #${{ github.run_number }}\n ${{ needs.Build.outputs.done }}\n${{ needs.TestA.outputs.done }}\n${{ needs.TestB.outputs.done }}\n${{ needs.Deploy.outputs.done }}'
 
   Notify_failure:
     if: ${{ failure() }}
