@@ -14,7 +14,8 @@ jobs:
     - name: Build
       run: echo Build
     - id: check
-      run: echo "::set-output name=message::Build"
+      if: ${{ always() }}
+      run: echo "::set-output name=message::Build ${{ job.status }}"
 
   TestA:
     runs-on: ubuntu-latest
@@ -26,7 +27,8 @@ jobs:
     - name: Test A
       run: echo Test A
     - id: check
-      run: echo "::set-output name=message::Test A"
+      if: ${{ always() }}
+      run: echo "::set-output name=message::Test A ${{ job.status }}"
 
   TestB:
     runs-on: ubuntu-latest
@@ -40,7 +42,8 @@ jobs:
         echo Test B
         exit 1
     - id: check
-      run: echo "::set-output name=message::Test B"
+      if: ${{ always() }}
+      run: echo "::set-output name=message::Test B ${{ job.status }}"
 
   Deploy:
     runs-on: ubuntu-latest
@@ -51,7 +54,8 @@ jobs:
     - name: Deploy
       run: echo Deploy
     - id: check
-      run: echo "::set-output name=message::Deploy"
+      if: ${{ always() }}
+      run: echo "::set-output name=message::Deploy ${{ job.status }}"
 
   Notify_succeed:
     if: ${{ success() }}
