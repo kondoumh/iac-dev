@@ -15,7 +15,7 @@ jobs:
       run: echo Build
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Build ${{ job.status }}"
+      run: echo "::set-output name=message::Build ${{ (job.status == 'success' && '✅') || '❌' }}"
 
   TestA:
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
       run: echo Test A
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Test A ${{ job.status }}"
+      run: echo "::set-output name=message::Test A ${{ (job.status == 'success' && '✅') || '❌' }}"
 
   TestB:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
         exit 1
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Test B ${{ job.status }}"
+      run: echo "::set-output name=message::Test B ${{ (job.status == 'success' && '✅') || '❌' }}"
 
   Deploy:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
       run: echo Deploy
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Deploy ${{ job.status }}"
+      run: echo "::set-output name=message::Deploy ${{ (job.status == 'success' && '✅') || '❌' }}"
 
   Notify_succeed:
     if: ${{ success() }}
