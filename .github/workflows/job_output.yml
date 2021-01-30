@@ -14,7 +14,7 @@ jobs:
     - name: Build
       run: echo Build
     - id: set-result
-      run: echo "::set-output name=result::Build ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: echo "::set-output name=result::Build ${{ job.status }}"
 
   TestA:
     runs-on: ubuntu-latest
