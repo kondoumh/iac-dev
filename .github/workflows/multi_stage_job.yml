@@ -14,7 +14,7 @@ jobs:
     - name: Build
       run: echo Build
     - id: check
-      run: echo "::set-output name=message Build done"
+      run: echo "::set-output name=message::Build done"
 
   TestA:
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
     - name: Test A
       run: echo Test A
     - id: check
-      run: echo "::set-output name=message Test A done"
+      run: echo "::set-output name=message::Test A done"
 
   TestB:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
       run: |
         echo Test B
     - id: check
-      run: echo "::set-output name=message Test B done"
+      run: echo "::set-output name=message::Test B done"
 
   Deploy:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
     - name: Deploy
       run: echo Deploy
     - id: check
-      run: echo "::set-output name=message Deploy done"
+      run: echo "::set-output name=message::Deploy done"
 
   Notify_succeed:
     if: ${{ success() }}
