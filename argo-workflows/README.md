@@ -20,14 +20,17 @@ open port-forward (running locally with Docker for Desktop etc)
 kubectl -n argo port-forward deployment/argo-server 2746:2746
 ```
 
-Submit an example workflow
+Submit hello-world workflow
 
 ```
 argo submit -n argo --watch hello-world.yaml
-
 argo list -n argo
-
 argo get -n argo @latest
-
 argo logs -n argo @latest
+```
+
+Submit workflow with parameter
+
+```
+argo submit -n argo --watch arguments-parameters.yaml -p message="goodbye world"
 ```
