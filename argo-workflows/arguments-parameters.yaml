@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: hello-world-parameters-
+  generateName: arguments-parameters-
 spec:
   # invoke the whalesay template with
   # "hello world" as the argument
@@ -19,6 +19,6 @@ spec:
       - name: message       # parameter declaration
     container:
       # run cowsay with that message input parameter as args
-      image: docker/whalesay
+      image: docker/whalesay:latest
       command: [cowsay]
       args: ["{{inputs.parameters.message}}"]
