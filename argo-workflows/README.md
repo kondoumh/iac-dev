@@ -34,3 +34,17 @@ Submit workflow with parameter
 ```
 argo submit -n argo --watch arguments-parameters.yaml -p message="goodbye world"
 ```
+
+Submit steps workflow
+
+```
+argo submit -n argo --watch steps.yaml
+```
+
+```
+STEP            TEMPLATE           PODNAME                 DURATION  MESSAGE
+ ✔ steps-lmp8k  hello-hello-hello
+ ├───✔ hello1   whalesay           steps-lmp8k-1250056042  9s
+ └─┬─✔ hello2a  whalesay           steps-lmp8k-4119689043  14s
+   └─✔ hello2b  whalesay           steps-lmp8k-4136466662  11s
+```
