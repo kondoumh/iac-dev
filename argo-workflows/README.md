@@ -48,3 +48,9 @@ STEP            TEMPLATE           PODNAME                 DURATION  MESSAGE
  └─┬─✔ hello2a  whalesay           steps-lmp8k-4119689043  14s
    └─✔ hello2b  whalesay           steps-lmp8k-4136466662  11s
 ```
+
+Submit dag workflow
+
+```
+argo submit -n argo --watch dag-diamond.yaml
+```
