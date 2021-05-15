@@ -54,3 +54,22 @@ Submit dag workflow
 ```
 argo submit -n argo --watch dag-diamond.yaml
 ```
+
+Submit artifacts workflow
+
+before submit setup artifact repository
+
+```
+helm repo add minio https://helm.min.io/
+helm install argo-artifacts minio/minio --set service.type=LoadBalancer --set fullnameOverride=argo-artifacts
+```
+
+```
+$ kubectl get svc argo-artifacts -n argo
+NAME             TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+argo-artifacts   LoadBalancer   10.99.59.234   localhost     9000:32040/TCP   74s
+```
+
+```
+argo submit -n argo --watch artifact-passing.yaml
+```
