@@ -73,3 +73,16 @@ argo-artifacts   LoadBalancer   10.99.59.234   localhost     9000:32040/TCP   74
 ```
 argo submit -n argo --watch artifact-passing.yaml
 ```
+
+
+Submit secrets workflow
+
+create the secret previously.
+
+```
+kubectl -n argo create secret generic my-secret --from-literal=mypassword=S00perS3cretPa55word
+```
+
+```
+argo submit -n argo --watch secrets.yaml
+```
