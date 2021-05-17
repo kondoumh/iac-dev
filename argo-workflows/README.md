@@ -98,3 +98,9 @@ Submit loops workflow
 ```
 argo submit -n argo --watch loops.yaml
 ```
+
+Submit loops with map
+
+```
+argo submit -n argo --watch loops-maps.yaml
+```
