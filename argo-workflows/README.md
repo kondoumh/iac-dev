@@ -86,3 +86,9 @@ kubectl -n argo create secret generic my-secret --from-literal=mypassword=S00per
 ```
 argo submit -n argo --watch secrets.yaml
 ```
+
+Submit scripts workflow
+
+```
+argo submit -n argo --watch script-bash.yaml
+```
