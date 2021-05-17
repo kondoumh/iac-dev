@@ -92,3 +92,9 @@ Submit scripts workflow
 ```
 argo submit -n argo --watch script-bash.yaml
 ```
+
+Submit loops workflow
+
+```
+argo submit -n argo --watch loops.yaml
+```
