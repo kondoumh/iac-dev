@@ -111,3 +111,9 @@ Submit loops with map
 ```
 argo submit -n argo --watch loops-maps.yaml
 ```
+
+Submit loops as param
+
+```
+argo submit -n argo --watch loops-param-argument.yaml
+```
