@@ -121,5 +121,9 @@ argo submit -n argo --watch loops-param-argument.yaml
 Sumbit loops result
 
 ```
-argo submit -n argo --watch loo-s-param-result.yaml
+argo submit -n argo --watch loops-param-result.yaml
+```
+
+```
+argo submit -n argo --watch coinflip.yaml
 ```
