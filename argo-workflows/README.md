@@ -124,6 +124,14 @@ Sumbit loops result
 argo submit -n argo --watch loops-param-result.yaml
 ```
 
+Submit coinflip example
+
 ```
 argo submit -n argo --watch coinflip.yaml
+```
+
+Submit retry backoff
+
+```
+argo submit -n argo --watch retry-backoff.yaml
 ```
