@@ -117,3 +117,9 @@ Submit loops as param
 ```
 argo submit -n argo --watch loops-param-argument.yaml
 ```
+
+Sumbit loops result
+
+```
+argo submit -n argo --watch loo-s-param-result.yaml
+```
