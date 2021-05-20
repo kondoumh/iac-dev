@@ -156,3 +156,11 @@ STEP                          TEMPLATE   PODNAME                              DU
              └─┬─✔ heads      heads      coinflip-recursive-76sdz-3040385095  5s
                └─○ tails      coinflip                                                  when 'heads == tails' evaluated false
 ```
+
+Submit exit handler example
+
+```
+$ argo submit -n argo --watch exit-handlers.yaml
+
+```
+
