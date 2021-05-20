@@ -162,5 +162,11 @@ Submit exit handler example
 ```
 $ argo submit -n argo --watch exit-handlers.yaml
 
-```
+STEP                           TEMPLATE          PODNAME                         DURATION  MESSAGE
+ ✖ exit-handlers-2xxzs         intentional-fail  exit-handlers-2xxzs             7s        Error (exit code 1)
 
+ ✔ exit-handlers-2xxzs.onExit  exit-handler
+ └─┬─○ celebrate               celebrate                                                   when 'Failed == Succeeded' evaluated false
+   ├─✔ cry                     cry               exit-handlers-2xxzs-914918728   11s
+   └─✔ notify                  send-email        exit-handlers-2xxzs-3516606585  9s
+```
