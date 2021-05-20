@@ -135,3 +135,24 @@ Submit retry backoff
 ```
 argo submit -n argo --watch retry-backoff.yaml
 ```
+
+Submit coinflip recursive example
+
+```
+$ argo submit -n argo --watch coinflip-recursive.yaml
+
+STEP                          TEMPLATE   PODNAME                              DURATION  MESSAGE
+ ✔ coinflip-recursive-76sdz   coinflip
+ ├───✔ flip-coin              flip-coin  coinflip-recursive-76sdz-1210589150  6s
+ └─┬─○ heads                  heads
+   └─✔ tails                  coinflip
+     ├───✔ flip-coin          flip-coin  coinflip-recursive-76sdz-2126060946  5s
+     └─┬─○ heads              heads                                                     when 'tails == heads' evaluated false
+       └─✔ tails              coinflip
+         ├───✔ flip-coin      flip-coin  coinflip-recursive-76sdz-957147006   6s
+         └─┬─○ heads          heads                                                     when 'tails == heads' evaluated false
+           └─✔ tails          coinflip
+             ├───✔ flip-coin  flip-coin  coinflip-recursive-76sdz-3152068274  5s
+             └─┬─✔ heads      heads      coinflip-recursive-76sdz-3040385095  5s
+               └─○ tails      coinflip                                                  when 'heads == tails' evaluated false
+```
