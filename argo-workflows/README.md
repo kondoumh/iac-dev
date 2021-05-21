@@ -170,3 +170,9 @@ STEP                           TEMPLATE          PODNAME                        
    ├─✔ cry                     cry               exit-handlers-2xxzs-914918728   11s
    └─✔ notify                  send-email        exit-handlers-2xxzs-3516606585  9s
 ```
+
+Submit timeout example
+
+```
+argo submit -n argo --watch timeout.yaml
+```
