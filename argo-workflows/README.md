@@ -176,3 +176,9 @@ Submit timeout example
 ```
 argo submit -n argo --watch timeout.yaml
 ```
+
+Submit volume pvc example
+
+```
+argo submit -n argo --watch volumes-pvc.yaml
+```
