@@ -182,3 +182,16 @@ Submit volume pvc example
 ```
 argo submit -n argo --watch volumes-pvc.yaml
 ```
+
+Submit suspending example
+
+```
+argo submit -n argo --watch suspend-template.yaml
+```
+
+To resume suspended workflow
+
+```
+argo resume -n argo suspend-template-5bmk5
+```
+
