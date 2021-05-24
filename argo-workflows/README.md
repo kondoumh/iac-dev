@@ -195,8 +195,14 @@ To resume suspended workflow
 argo resume -n argo suspend-template-5bmk5
 ```
 
-Submit Daemon containers example
+Submit daemon containers example
 
 ```
 argo submit -n argo --watch daemon-example.yaml
+```
+
+Submit sidecar example
+
+```
+argo submit -n argo --watch sidecar-nginx.yaml
 ```
