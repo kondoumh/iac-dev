@@ -206,3 +206,9 @@ Submit sidecar example
 ```
 argo submit -n argo --watch sidecar-nginx.yaml
 ```
+
+Submit hardwired artifact example
+
+```
+argo submit -n argo --watch input-artifact-git.yaml
+```
