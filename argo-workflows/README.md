@@ -212,3 +212,9 @@ Submit hardwired artifact example
 ```
 argo submit -n argo --watch input-artifact-git.yaml
 ```
+
+Submit kubernetes resource example
+
+```
+argo submit -n argo --watch k8s-jobs.yaml
+```
