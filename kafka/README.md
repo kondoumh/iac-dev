@@ -4,12 +4,12 @@ https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md
 
 Install with helm chart
 
-```sh
-$ helm repo add bitnami https://charts.bitnami.com/bitnami
-$ helm install my-release bitnami/kafka
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-release bitnami/kafka
 ```
 
-```sh
+```
 $ kubectl get po,svc
 NAME                         READY   STATUS    RESTARTS   AGE
 pod/my-release-kafka-0       1/1     Running   3          37m
@@ -33,21 +33,29 @@ Each Kafka broker can be accessed by producers via port 9092 on the following DN
 
 To create a pod that you can use as a Kafka client run the following commands:
 
-```sh
+```
 kubectl run my-release-kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.8.0-debian-10-r0 --namespace default --command -- sleep infinity
 kubectl exec --tty -i my-release-kafka-client --namespace default -- bash
 ```
 
+List topics:
+
+```
+$ kafka-topics.sh --list --zookeeper my-release-zookeeper.default.svc.cluster.local:2181
+__consumer_offsets
+test
+```
+
 PRODUCER:
 
-```sh
+```
 kafka-console-producer.sh \
      --broker-list my-release-kafka-0.my-release-kafka-headless.default.svc.cluster.local:9092 \
      --topic test
 ```
 
 CONSUMER:
-```sh
+```
 kafka-console-consumer.sh \
     --bootstrap-server my-release-kafka.default.svc.cluster.local:9092 \
     --topic test \
