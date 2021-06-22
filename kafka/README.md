@@ -1,4 +1,5 @@
-# Deploy Kafka in local Kubernetes Cluster
+# Setup Apache Kafka
+## Deploy Kafka in local Kubernetes Cluster
 
 https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md
 
@@ -60,4 +61,14 @@ kafka-console-consumer.sh \
     --bootstrap-server my-release-kafka.default.svc.cluster.local:9092 \
     --topic test \
     --from-beginning
+```
+
+## Install Kafka with Homebrew
+
+```
+brew install kafka
+brew services start zookeeper
+brew services start kafka
+
+kafka-topics --list --zookeeper localhost:2181
 ```
