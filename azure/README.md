@@ -2,6 +2,8 @@
 
 ## Azure CLI で仮想マシンを作成する
 
+https://docs.microsoft.com/ja-jp/cli/azure/azure-cli-vm-tutorial
+
 ログイン
 
 ```
