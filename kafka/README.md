@@ -71,4 +71,13 @@ brew services start zookeeper
 brew services start kafka
 
 kafka-topics --list --zookeeper localhost:2181
+
+kafka-console-producer \
+     --broker-list localhost:9092 \
+     --topic test
+
+kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic test \
+    --from-beginning
 ```
