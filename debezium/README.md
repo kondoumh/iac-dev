@@ -122,5 +122,11 @@ Subscribe topic `connect-status`, then you can get status of connectors
 
 Subscribe topic `localhost.public.account`, then you can get payload of database update
 
+Delete Connector
+
+```
+curl -X DELETE http://localhost:8083/connectors/postgres-connector
+```
+
 # Docker
 https://github.com/debezium/debezium-examples/tree/master/tutorial#using-postgres
