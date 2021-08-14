@@ -47,7 +47,7 @@ hoge=# CREATE TABLE account(id varchar(8), name varchar(8));
 
 https://debezium.io/documentation/reference/install.html
 
-Download debezium connector archive and extranted its contents to path kafka plugins
+Download debezium connector archive and extract its contents to kafka plugins directory
 
 ```
 mkdir -p /usr/local/share/kafka/plugins
@@ -116,7 +116,9 @@ Register postgresql connection setting
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-postgres.json
 ```
 
-You need add `plugin.name` with value `pgoutput` to setting
+You need to add `plugin.name` with value `pgoutput` to setting
+
+[register-postgress.json](https://github.com/kondoumh/iac-dev/blob/master/debezium/register-postgres.json#L13)
 
 Subscribe topic `connect-status`, then you can get status of connectors
 
