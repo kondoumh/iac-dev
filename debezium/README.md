@@ -75,7 +75,7 @@ connect-distributed /usr/local/etc/kafka/connect-distributed.properties
 ```
 
 ```
-$ curl http://localhost:8083/connector-plugins | jq
+$ curl http://localhost:8083/connector-plugins | jq .
 [
   {
     "class": "io.debezium.connector.postgresql.PostgresConnector",
