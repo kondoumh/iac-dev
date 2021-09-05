@@ -12,7 +12,7 @@ az login
 
 ロケーションを取得
 
-```
+```sh
 $ az account list-locations | grep japaneast
     "id": "/subscriptions/9886644e-0eff-4a2d-9f5f-c3bc768bdf8e/locations/japaneast",
     "name": "japaneast",
@@ -22,7 +22,7 @@ $ az account list-locations | grep japaneast
 
 リソースグループを作成
 
-```
+```sh
 $ az group create --name TutorialResources --location japaneast
 {
   "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/TutorialResources",
@@ -45,7 +45,7 @@ az group list
 
 仮想マシンの作成
 
-```
+```sh
 $ az vm create --resource-group TutorialResources \
   --name TutorialVM1 \
   --image UbuntuLTS \
@@ -85,7 +85,7 @@ az vm show --name TutorialVM1 --resource-group TutorialResources \
 
 NIC オブジェクト ID を環境変数に割り当て
 
-```
+```sh
 NIC_ID=$(az vm show -n TutorialVM1 -g TutorialResources \
   --query 'networkProfile.networkInterfaces[].id' \
   -o tsv)
@@ -93,13 +93,13 @@ NIC_ID=$(az vm show -n TutorialVM1 -g TutorialResources \
 
 NIC 情報を取得
 
-```
+```sh
 az network nic show --ids $NIC_ID
 ```
 
 NIC 情報からパブリック IP アドレスとサブネットオブジェクト ID を取得
 
-```
+```sh
 az network nic show --ids $NIC_ID \
   --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
   -o json
@@ -107,7 +107,7 @@ az network nic show --ids $NIC_ID \
 
 read コマンドで TSV を読み込み
 
-```
+```sh
 read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
   --ids $NIC_ID \
   --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
@@ -116,20 +116,20 @@ read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
 
 パブリック IP アドレスをルックアップ
 
-```
+```sh
 VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
   --query ipAddress \
   -o tsv)
 ```
 
 IP アドレスを確認
-```
+```sh
 echo $VM1_IP_ADDR
 ```
 
 既存のサブネットでの新規 VM 作成
 
-```
+```sh
 VM2_IP_ADDR=$(az vm create -g TutorialResources \
   -n TutorialVM2 \
   --image UbuntuLTS \
@@ -141,7 +141,7 @@ VM2_IP_ADDR=$(az vm create -g TutorialResources \
 
 SSH 接続
 
-```
+```sh
 ssh $VM2_IP_ADDR
 ```
 
