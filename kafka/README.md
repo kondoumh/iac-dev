@@ -84,6 +84,8 @@ kafka-console-consumer \
 
 ## Install with Strimzi
 
+[Quickstarts](https://strimzi.io/quickstarts/)
+
 Create kafka namespace and apply strimzi installation file
 ```
 kubectl create namespace kafka
@@ -127,6 +129,49 @@ $ kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n kafka
 kafka.kafka.strimzi.io/my-cluster condition met
 ```
 
+Manifest applied
+```yaml
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-cluster
+spec:
+  kafka:
+    version: 2.8.0
+    replicas: 1
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    config:
+      offsets.topic.replication.factor: 1
+      transaction.state.log.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      log.message.format.version: "2.8"
+      inter.broker.protocol.version: "2.8"
+    storage:
+      type: jbod
+      volumes:
+      - id: 0
+        type: persistent-claim
+        size: 100Gi
+        deleteClaim: false
+  zookeeper:
+    replicas: 1
+    storage:
+      type: persistent-claim
+      size: 100Gi
+      deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+```
+
 List pod, service, deployment
 ```
 $ kubectl -n kafka get po,svc,deploy
@@ -152,4 +197,17 @@ Send and receive messages
 kubectl -n kafka run kafka-producer -ti --image=quay.io/strimzi/kafka:0.25.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic my-topic
 
 kubectl -n kafka run kafka-consumer -ti --image=quay.io/strimzi/kafka:0.25.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
+```
+
+Undeploy kafka cluster
+
+```
+kubectl delete -f https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml -n kafka
+```
+
+Undeploy Strimzi
+
+```
+kubectl delete -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
+kubectl delete ns kafka
 ```
