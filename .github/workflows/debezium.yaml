@@ -20,10 +20,12 @@ jobs:
           # kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
       - name: Install debezium connect for PostgreSQL
         run: |
-          kubectl apply -f debezium/kafka-connect-deploy.yaml
+          kubectl apply -f debezium/kafka-connect-deploy.yaml -n wf
           # kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
       - name: Wait
-        run: sleep 60
+        run: sleep 30
       - name: Check
-        run: kubectl get po,deploy,svc -n wf
-  
+        run: |
+          kubectl get po,deploy,svc -n wf
+          kubectl describe po wf-db-postgresql-0 -n wf
+          kubectl describe po wf-kafka-cluster-0 -n wf
