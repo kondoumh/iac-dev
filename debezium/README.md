@@ -132,3 +132,66 @@ curl -X DELETE http://localhost:8083/connectors/postgres-connector
 
 # Docker
 https://github.com/debezium/debezium-examples/tree/master/tutorial#using-postgres
+
+# Kubernetes
+
+## primitive way
+Kafka has been pre-deployed by bitnami's helmchart
+
+Install and execute connector manually in kafka pod
+
+```
+kubectl -n wf exec --stdin --tty wf-kafka-cluster-0 -- /bin/bash
+cd /opt/bitnami/kafka/config
+sed -i -e "s/#plugin.path=/plugin.path=\/opt\/bitnami\/kafka\/plugins/g" connect-distributed.properties
+cd /opt/bitnami
+mkdir work && cd work
+curl https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.6.1.Final/debezium-connector-postgres-1.6.1.Final-plugin.tar.gz | tar xvz
+mkdir /opt/bitnami/kafka/plugins
+mv debezium-connector-postgres /opt/bitnami/kafka/plugins/
+connect-distributed.sh /opt/bitnami/kafka/config/connect-distributed.properties &
+```
+
+List plugins
+
+```
+$ curl http://localhost:8083/connector-plugins
+[{"class":"io.debezium.connector.postgresql.PostgresConnector","type":"source","version":"1.6.1.Final"},{"class":"org.apache.kafka.connect.file.FileStreamSinkConnector","type":"sink","version":"2.8.0"},{"class":"org.apache.kafka.connect.file.FileStreamSourceConnector","type":"source","version":"2.8.0"},{"class":"org.apache.kafka.connect.mirror.MirrorCheckpointConnector","type":"source","version":"1"},{"class":"org.apache.kafka.connect.mirror.MirrorHeartbeatConnector","type":"source","version":"1"},{"class":"org.apache.kafka.connect.mirror.MirrorSourceConnector","type":"source","version":"1"}]
+```
+
+Registor connctor
+
+cp json from local
+```
+kubectl -n wf cp register-postgres-k8s.json wf-kafka-cluster-0:/opt/bitnami/work
+```
+register
+```
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-postgres-k8s.json
+```
+
+```sh
+kubectl run wf-kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.8.0-debian-10-r0 -n wf --command -- sleep infinity
+kubectl exec --tty -i wf-kafka-client -n wf -- bash
+# $ kafka-topics.sh --list --zookeeper 10.106.187.156:2181 # cluster-ip
+$ kafka-topics.sh --list --zookeeper wf-kafka-cluster-zookeeper:2181
+wf-db-postgresql.public.containers
+
+kafka-console-consumer.sh \
+    --bootstrap-server wf-kafka-cluster:9092 \
+    --topic wf-db-postgresql.public.containers \
+    --from-beginning
+```
+
+## Using debeaium connecter image
+
+https://hub.docker.com/r/debezium/connect
+https://github.com/debezium/docker-images
+https://ibm-cloud-architecture.github.io/refarch-container-inventory/debezium-postgresql/
+
+
+```
+kubectl apply -f kafka-connect-deploy.yaml -n wf
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:30500/connectors/ -d @register-postgres-k8s.json
+```
+

@@ -1,0 +1,15 @@
+{
+  "name": "postgres-connector-k8s",
+  "config": {
+      "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+      "tasks.max": "1",
+      "database.hostname": "wf-db-postgresql",
+      "database.port": "5432",
+      "database.user": "postgres",
+      "database.password": "postgres",
+      "database.dbname" : "hoge",
+      "database.server.name": "postgres",
+      "table.whitelist": "public.containers",
+      "plugin.name": "pgoutput"
+  }
+}
