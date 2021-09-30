@@ -22,6 +22,8 @@ jobs:
         run: |
           kubectl apply -f debezium/kafka-connect-deploy.yaml
           # kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
+      - name: Wait
+        run: sleep 60
       - name: Check
-        run: kubectl get po,svc -n wf
+        run: kubectl get po,deploy,svc -n wf
   
