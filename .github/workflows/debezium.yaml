@@ -13,11 +13,15 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm install wf-db bitnami/postgresql -f postgres/values.yaml -n wf
-          kubectl run wf-db-postgresql-client --rm --tty -i --restart='Never' --namespace wf --image docker.io/bitnami/postgresql:11.12.0-debian-10-r0 --env="PGPASSWORD=postgres" --command -- psql --host wf-db-postgresql -U postgres -d postgres -p 5432
+          kubectl wait pod/wf-db-postgresql-0 --for=condition=Ready --timeout=60s -n wf
       - name: Install kafka
-        run: helm install wf-kafka-cluster bitnami/kafka -n wf
+        run: |
+          helm install wf-kafka-cluster bitnami/kafka -n wf
+          kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
       - name: Install debezium connect for PostgreSQL
-        run: kubectl apply -f debezium/kafka-connect-deploy.yaml
+        run: |
+          kubectl apply -f debezium/kafka-connect-deploy.yaml
+          kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
       - name: Check
         run: kubectl get po,svc -n wf
   
