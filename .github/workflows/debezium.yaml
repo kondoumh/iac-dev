@@ -32,6 +32,11 @@ jobs:
           echo create db
       - name: Register connector setting
         run: |
-          curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:30500/connectors/ -d @debezium/register-postgres-k8s.json
-          curl http://localhost:30500/connectors | jq .
-          curl http://localhost:30500/connectors/postgres-connector-k8s | jq .
+          POD=$(kubectl -n wf get pod -l app=kafkaconnect -o jsonpath="{.items[0].metadata.name}")
+          kubectl -n wf cp debezium/register-postgres-k8s.json $POD:/kafka/connect/register-postgres-k8s.json
+          kubectl -n wf exec -i $POD -- bash << 'EOC'
+            curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://kafkaconnect-service:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
+          EOC
+          kubectl -n wf exec -i $POD -- bash << 'EOC'
+            curl http://localhost:30500/connectors/postgres-connector-k8s
+          EOC
