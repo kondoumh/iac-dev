@@ -44,5 +44,7 @@ jobs:
           #   curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://kafkaconnect-service:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
           # EOC
           kubectl -n wf exec -i $POD -- bash << 'EOC'
-            curl http://localhost:8083/connectors
+            IP=$(hostname -i)
+            echo $IP
+            curl http://$IP:8083/connectors
           EOC
