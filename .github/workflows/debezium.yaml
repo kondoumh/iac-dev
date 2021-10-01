@@ -37,12 +37,10 @@ jobs:
           echo $POD
           kubectl -n wf cp debezium/register-postgres-k8s.json $POD:/kafka/connect/register-postgres-k8s.json
           kubectl -n wf exec -i $POD -- bash << 'EOC'
-            ls -l /kafka/connect
+            IP=$(hostname -i)
+            echo $IP
+            curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://$IP:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
           EOC
-
-          # kubectl -n wf exec -i $POD -- bash << 'EOC'
-          #   curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://kafkaconnect-service:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
-          # EOC
           kubectl -n wf exec -i $POD -- bash << 'EOC'
             IP=$(hostname -i)
             echo $IP
