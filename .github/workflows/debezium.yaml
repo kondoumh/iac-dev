@@ -18,7 +18,7 @@ jobs:
         run: |
           helm install wf-kafka-cluster bitnami/kafka -n wf
           # kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
-          wait 60
+          sleep 60
       - name: Install debezium connect for PostgreSQL
         run: |
           kubectl apply -f debezium/kafka-connect-deploy.yaml -n wf
