@@ -28,21 +28,22 @@ jobs:
       - name: Check
         run: |
           kubectl get po,deploy,svc -n wf
-      - name: Create db and insert data
+      - name: Execute DDL / DML
         run: |
-          echo create db
+          kubectl -n wf exec -i wf-db-postgresql-0 -- bash << 'EOC'
+            PGPASSWORD=postgres psql -U postgres -c 'create database hoge;'
+            PGPASSWORD=postgres psql -U postgres -d hoge -c 'create table account(id varchar(8), name varchar(8));'
+            PGPASSWORD=postgres psql -U postgres -d hoge -c "insert into account (id, name) values ('1000', 'Bob');"
+          EOC
       - name: Register connector setting
         run: |
           POD=$(kubectl -n wf get pod -l app=kafkaconnect -o jsonpath="{.items[0].metadata.name}")
-          echo $POD
           kubectl -n wf cp debezium/register-postgres-k8s.json $POD:/kafka/connect/register-postgres-k8s.json
           kubectl -n wf exec -i $POD -- bash << 'EOC'
             IP=$(hostname -i)
-            echo $IP
             curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://$IP:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
           EOC
           kubectl -n wf exec -i $POD -- bash << 'EOC'
             IP=$(hostname -i)
-            echo $IP
             curl http://$IP:8083/connectors
           EOC
