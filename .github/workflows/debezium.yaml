@@ -18,12 +18,13 @@ jobs:
         run: |
           helm install wf-kafka-cluster bitnami/kafka -n wf
           # kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
+          wait 60
       - name: Install debezium connect for PostgreSQL
         run: |
           kubectl apply -f debezium/kafka-connect-deploy.yaml -n wf
           # kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
       - name: Wait
-        run: sleep 180
+        run: sleep 120
       - name: Check
         run: |
           kubectl get po,deploy,svc -n wf
@@ -42,6 +43,6 @@ jobs:
           # kubectl -n wf exec -i $POD -- bash << 'EOC'
           #   curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://kafkaconnect-service:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
           # EOC
-          # kubectl -n wf exec -i $POD -- bash << 'EOC'
-          #   curl http://localhost:30500/connectors/postgres-connector-k8s
-          # EOC
+          kubectl -n wf exec -i $POD -- bash << 'EOC'
+            curl http://kafkaconnect-service:8083/connectors
+          EOC
