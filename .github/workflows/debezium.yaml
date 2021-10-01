@@ -6,22 +6,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: engineerd/setup-kind@v0.5.0
+      - run: minikube start --memory=4096
       - name: Create namespace
         run: kubectl create namespace wf
       - name: Install PostgreSQL
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm install wf-db bitnami/postgresql -f postgres/values.yaml -n wf
-          kubectl wait pod/wf-db-postgresql-0 --for=condition=Ready --timeout=60s -n wf
+          # kubectl wait pod/wf-db-postgresql-0 --for=condition=Ready --timeout=60s -n wf
       - name: Install kafka
         run: |
           helm install wf-kafka-cluster bitnami/kafka -n wf
-          kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
+          # kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
+          sleep 60
       - name: Install debezium connect for PostgreSQL
         run: |
-          kubectl apply -f debezium/kafka-connect-deploy.yaml
-          kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
+          kubectl apply -f debezium/kafka-connect-deploy.yaml -n wf
+          # kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
+      - name: Wait
+        run: sleep 120
       - name: Check
-        run: kubectl get po,svc -n wf
-  
+        run: |
+          kubectl get po,deploy,svc -n wf
+      - name: Execute DDL / DML
+        run: |
+          kubectl -n wf exec -i wf-db-postgresql-0 -- bash << 'EOC'
+            PGPASSWORD=postgres psql -U postgres -c 'create database hoge;'
+            PGPASSWORD=postgres psql -U postgres -d hoge -c 'create table account(id varchar(8), name varchar(8));'
+            PGPASSWORD=postgres psql -U postgres -d hoge -c "insert into account (id, name) values ('1000', 'Bob');"
+          EOC
+      - name: Register connector setting
+        run: |
+          POD=$(kubectl -n wf get pod -l app=kafkaconnect -o jsonpath="{.items[0].metadata.name}")
+          kubectl -n wf cp debezium/register-postgres-k8s.json $POD:/kafka/connect/register-postgres-k8s.json
+          kubectl -n wf exec -i $POD -- bash << 'EOC'
+            IP=$(hostname -i)
+            curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://$IP:8083/connectors -d @/kafka/connect/register-postgres-k8s.json
+          EOC
+          kubectl -n wf exec -i $POD -- bash << 'EOC'
+            IP=$(hostname -i)
+            curl http://$IP:8083/connectors
+          EOC

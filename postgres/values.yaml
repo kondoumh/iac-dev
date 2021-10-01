@@ -20,3 +20,6 @@ postgresqlConfiguration:
   sharedPreloadLibraries: 'pgaudit'
   includeDir: 'conf.d'
   pgaudit.logCatalog: 'off'
+
+persistence:
+  storageClass: "standard"
