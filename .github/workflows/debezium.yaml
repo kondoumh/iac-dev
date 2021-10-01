@@ -26,6 +26,7 @@ jobs:
         run: sleep 30
       - name: Check
         run: |
+          kubectl get sc
           kubectl get po,deploy,svc -n wf
           kubectl describe po wf-db-postgresql-0 -n wf
           kubectl describe po wf-kafka-cluster-0 -n wf
