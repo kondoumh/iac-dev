@@ -13,17 +13,17 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm install wf-db bitnami/postgresql -f postgres/values.yaml -n wf
-          # kubectl wait pod/wf-db-postgresql-0 --for=condition=Ready --timeout=60s -n wf
       - name: Install kafka
         run: |
           helm install wf-kafka-cluster bitnami/kafka -n wf
-          # kubectl wait po/wf-kafka-cluster-0 --for=condition=Ready --timeout=60s -n wf
-          sleep 60
+      - name: Wait 1
+        run: sleep 60
       - name: Install debezium connect for PostgreSQL
         run: |
           kubectl apply -f debezium/kafka-connect-deploy.yaml -n wf
-          # kubectl wait deploy/kafkaconnect-deploy --for=condition=Available --timeout=60s -n wf
-      - name: Wait
+      - name: Install kafka client
+        run: kubectl run wf-kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.8.0-debian-10-r0 -n wf --command -- sleep infinity
+      - name: Wait 2
         run: sleep 120
       - name: Check
         run: |
@@ -46,4 +46,19 @@ jobs:
           kubectl -n wf exec -i $POD -- bash << 'EOC'
             IP=$(hostname -i)
             curl http://$IP:8083/connectors
+          EOC
+      - name: Check topic
+        run: |
+          kubectl -n wf exec -i wf-kafka-client -- bash << 'EOC'
+            kafka-topics.sh --list --zookeeper wf-kafka-cluster-zookeeper:2181
+          EOC
+      - name: Consume topic
+        run: |
+          kubectl -n wf exec -i wf-kafka-client -- bash << 'EOC'
+            kafka-console-consumer.sh \
+              --bootstrap-server wf-kafka-cluster:9092 \
+              --topic postgres.public.account \
+              --from-beginning > /bitnami/kafka/consumer.txt &
+            sleep 5
+            cat /bitnami/kafka/consumer.txt
           EOC
