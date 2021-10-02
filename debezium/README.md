@@ -179,7 +179,7 @@ wf-db-postgresql.public.containers
 
 kafka-console-consumer.sh \
     --bootstrap-server wf-kafka-cluster:9092 \
-    --topic wf-db-postgresql.public.containers \
+    --topic postgres.public.account \
     --from-beginning
 ```
 
