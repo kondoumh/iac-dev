@@ -22,3 +22,10 @@ Deploy to minikube
 ```
 kubectl apply -f manifest.yml
 ```
+
+Call API
+
+```
+kubectl run -it --rm=true busybox --image=yauritux/busybox-curl --restart=Never
+# curl http://<pod ip>:3000/hello?name=foo
+```
