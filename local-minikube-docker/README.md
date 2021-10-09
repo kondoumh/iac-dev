@@ -27,5 +27,5 @@ Call API
 
 ```
 kubectl run -it --rm=true busybox --image=yauritux/busybox-curl --restart=Never
-# curl http://<pod ip>:3000/hello?name=foo
+# curl http://nodejs-service:3000/hello?name=foo
 ```
