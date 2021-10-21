@@ -1,0 +1,36 @@
+name: Use GitHub container registry
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push container image
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: ghcr.io/kondoumh/gh-container-registry/nodejs-server
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: local-minikube-docker
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: minikube start
+    - name: Create secret for GitHub container registry
+    - run: |
+        kubectl create secret docker-registry regcred \
+          --docker-server=https://ghcr.io \
+          --docker-username=kondoumh \
+          --docker-password=${{ secrets.GITHUB_TOKEN }}
+    - name: Deploy to minikube
+      run: kubectl apply -f gh-container-registry/manifest.yml
+    - name: Wait
+      run: sleep 60
+    - name: Show deployment
+      run: kubectl get po,deploy
