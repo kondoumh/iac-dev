@@ -10,7 +10,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: ghcr.io/kondoumh/gh-container-registry/nodejs-server
-        username: ${{ github.actor }}
+        username: kondoumh
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: local-minikube-docker
