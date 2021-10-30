@@ -62,3 +62,37 @@ spec:
             - name: AWS_BUCKET_BACKUP_PATH
               value: "bar"
 ```
+
+CronJob sample
+===============
+
+Apply
+```
+kubectl apply -f cron-job.yaml
+```
+
+Get cronjob
+
+```
+$ kubectl get cronjob
+NAME    SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+hello   */1 * * * *   False     0        18s             32s
+```
+
+Get pod
+
+```
+$ kubectl get po
+NAME                   READY   STATUS      RESTARTS   AGE
+hello-27259558-zgjcp   0/1     Completed   0          2m27s
+hello-27259559-x282k   0/1     Completed   0          87s
+hello-27259560-zgckq   0/1     Completed   0          27s
+```
+
+Get log
+
+```
+$ kubectl logs hello-27259557-24wdz
+Sat Oct 30 05:57:07 UTC 2021
+Hello from the Kubernetes cluster
+```
