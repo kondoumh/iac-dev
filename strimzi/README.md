@@ -137,3 +137,11 @@ Undeploy Strimzi
 kubectl delete -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
 kubectl delete ns kafka
 ```
+
+
+## Debezium
+
+```
+curl https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.1.Final/debezium-connector-postgres-1.7.1.Final-plugin.tar.gz | tar xvz
+docker build . -t my-connect-debezium
+```
