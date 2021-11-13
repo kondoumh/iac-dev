@@ -1,0 +1,16 @@
+name: "Build Debezium postgresql connector images"
+on: [workflow_dispatch]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker login
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Build and push container image
+        run: |
+          cd strimzi
+          docker build . -t strimzi-debezium-connect-pgsql
+          docker tag strimzi-debezium-connect-pgsql ghcr.io/kondoumh/strimzi-debezium-connect-pgsql:latest
+          docker push  ghcr.io/kondoumh/strimzi-debezium-connect-pgsql:latest
