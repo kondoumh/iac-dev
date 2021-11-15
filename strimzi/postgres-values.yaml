@@ -1,0 +1,25 @@
+global:
+  postgresql:
+    postgresqlDatabase: "postgres"
+    postgresqlUsername: "postgres"
+    postgresqlPassword: "postgres"
+
+postgresqlConfiguration:
+  listenAddresses: '*'
+  port: '5432'
+  walLevel: 'logical'
+  fsync: 'on'
+  maxWalSize: '400MB'
+  maxWalSenders: '16'
+  walKeepSegments: '12'
+  hotStandby: 'on'
+  logConnections: 'false'
+  logDisconnections: 'false'
+  logHostname: 'false'
+  clientMinMessages: 'error'
+  sharedPreloadLibraries: 'pgaudit'
+  includeDir: 'conf.d'
+  pgaudit.logCatalog: 'off'
+
+persistence:
+  storageClass: "standard"

@@ -138,10 +138,37 @@ kubectl delete -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
 kubectl delete ns kafka
 ```
 
-
 ## Debezium
+
+[Deploying Debezium using the new KafkaConnector resource](https://strimzi.io/blog/2020/01/27/deploying-debezium-with-kafkaconnector-resource/)
+
+Create plugin installed kafka image
 
 ```
 curl https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.1.Final/debezium-connector-postgres-1.7.1.Final-plugin.tar.gz | tar xvz
 docker build . -t my-connect-debezium
+```
+
+The following image is available.
+
+`ghcr.io/kondoumh/strimzi-debezium-connect-pgsql`
+
+
+Install PostgreSQL
+
+```
+kubectl create ns dz
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm install db bitnami/postgresql -f postgres-values.yaml -n dz
+```
+
+Create database
+
+```
+kubectl -n dz exec -i db-postgresql-0 -- bash << 'EOC'
+  PGPASSWORD=postgres psql -U postgres -c 'CREATE DATABASE hoge;'
+  PGPASSWORD=postgres psql -U postgres -c 'CREATE SCHEMA dz;'
+  PGPASSWORD=postgres psql -U postgres -c 'CREATE TABLE dz.account(id varchar(8), name varchar(8));'
+EOC
 ```
