@@ -138,7 +138,7 @@ kubectl delete -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
 kubectl delete ns kafka
 ```
 
-## Debezium
+## Debezium (WIP)
 
 [Deploying Debezium using the new KafkaConnector resource](https://strimzi.io/blog/2020/01/27/deploying-debezium-with-kafkaconnector-resource/)
 
@@ -153,11 +153,15 @@ The following image is available.
 
 `ghcr.io/kondoumh/strimzi-debezium-connect-pgsql`
 
+Create namespace
+
+```
+kubectl create ns dz
+```
 
 Install PostgreSQL
 
 ```
-kubectl create ns dz
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm install db bitnami/postgresql -f postgres-values.yaml -n dz
@@ -171,4 +175,41 @@ kubectl -n dz exec -i db-postgresql-0 -- bash << 'EOC'
   PGPASSWORD=postgres psql -U postgres -c 'CREATE SCHEMA dz;'
   PGPASSWORD=postgres psql -U postgres -c 'CREATE TABLE dz.account(id varchar(8), name varchar(8));'
 EOC
+```
+
+Create secret for database credentials
+
+```
+kubectl -n dz create secret generic postgres-credentials \
+  --from-file=postgres-credentials.properties
+```
+
+Install Strimz
+
+```
+kubectl apply -f 'https://strimzi.io/install/latest?namespace=dz' -n dz
+```
+
+Create kafka cluster
+
+```
+kubectl apply -f https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml -n dz
+```
+
+Create the connect cluster
+
+```
+kubectl -n dz apply -f kafka-connect.yaml
+```
+
+Create the connector (registor connect settings to connect cluster)
+
+```
+kubectl -n dz apply -f kafka-connector.yaml
+```
+
+Get status
+
+```
+kubectl -n dz get kctr inventory-connector -o yam
 ```

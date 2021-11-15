@@ -1,0 +1,19 @@
+apiVersion: "kafka.strimzi.io/v1alpha1"
+kind: "KafkaConnector"
+metadata:
+  name: "inventory-connector"
+  labels:
+    strimzi.io/cluster: my-connect-cluster
+spec:
+  class: io.debezium.connector.postgres.PostgresConnector
+  tasksMax: 1
+  config:
+    database.hostname: db-postgresql
+    database.port: "5432"
+    database.user: postgres
+    database.password: postgres
+    database.server.name: "postgres"
+    database.whitelist: "dz.account"
+    database.history.kafka.bootstrap.servers: "my-cluster-kafka-bootstrap:9092"
+    database.history.kafka.topic: "dz.account"
+    include.schema.changes: "true"
