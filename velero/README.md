@@ -36,3 +36,11 @@ deployment.apps/velero   1/1     1            1           2m12s
 NAME                               DESIRED   CURRENT   READY   AGE
 replicaset.apps/velero-fbf6dfbc8   1         1         1       2m12s
 ```
+
+
+Uninstalling Velero
+
+```
+kubectl delete namespace/velero clusterrolebinding/velero
+kubectl delete crds -l component=velero
+```
