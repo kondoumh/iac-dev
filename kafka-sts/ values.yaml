@@ -1,2 +1,3 @@
-replicaCount: 3
+replicaCount: 4
 replicationFactor: 2
+deleteTopicEnable: true
