@@ -299,6 +299,8 @@ Proposed partition reassignment configuration
 {"version":1,"partitions":[{"topic":"topic-2","partition":0,"replicas":[2,0],"log_dirs":["any","any"]},{"topic":"topic-2","partition":1,"replicas":[0,1],"log_dirs":["any","any"]},{"topic":"topic-2","partition":2,"replicas":[1,2],"log_dirs":["any","any"]}]}
 ```
 
+Create expand-cluster-reassignment.json.
+
 ```shell
 cat <<EOF > expand-cluster-reassignment.json
 {"version":1,"partitions":[{"topic":"topic-2","partition":0,"replicas":[2,0],"log_dirs":["any","any"]},{"topic":"topic-2","partition":1,"replicas":[0,1],"log_dirs":["any","any"]},{"topic":"topic-2","partition":2,"replicas":[1,2],"log_dirs":["any","any"]}]}
@@ -338,4 +340,151 @@ Topic: topic-2  TopicId: _MgPr5IFSKK1XjaYlIkhnQ PartitionCount: 3       Replicat
         Topic: topic-2  Partition: 0    Leader: 2       Replicas: 2,0   Isr: 2,0
         Topic: topic-2  Partition: 1    Leader: 0       Replicas: 0,1   Isr: 0,1
         Topic: topic-2  Partition: 2    Leader: 1       Replicas: 1,2   Isr: 1,2
+```
+
+## Reduce the number of brokers after changing to a degraded configuration
+
+Start with 4 brokers
+
+```shell
+kubectl get po -n wf
+NAME                           READY   STATUS    RESTARTS        AGE
+wf-kafka-cluster-0             1/1     Running   0               90m
+wf-kafka-cluster-1             1/1     Running   1 (89m ago)     90m
+wf-kafka-cluster-2             1/1     Running   1 (89m ago)     90m
+wf-kafka-cluster-3             1/1     Running   0               97s
+wf-kafka-cluster-zookeeper-0   1/1     Running   0               90m
+```
+
+```shell
+$ zookeeper-shell.sh wf-kafka-cluster-zookeeper:2181 ls /brokers/ids
+Connecting to wf-kafka-cluster-zookeeper:2181
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+[0, 1, 2, 3]
+```
+
+Create topic.
+
+```shell
+$ kafka-topics.sh --create --zookeeper wf-kafka-cluster-zookeeper:2181 --replication-factor 2 --partitions 3 --topic topic-3
+Created topic topic-3.
+```
+
+Describe topic.
+
+```
+$ kafka-topics.sh --describe --zookeeper wf-kafka-cluster-zookeeper:2181 --topic topic-3
+Topic: topic-3  TopicId: 8psRp-LVQheM-5KYg-r4Lg PartitionCount: 3       ReplicationFactor: 2    Configs: 
+        Topic: topic-3  Partition: 0    Leader: 0       Replicas: 0,3   Isr: 0,3
+        Topic: topic-3  Partition: 1    Leader: 1       Replicas: 1,0   Isr: 1,0
+        Topic: topic-3  Partition: 2    Leader: 2       Replicas: 2,1   Isr: 2,1
+```
+
+Create topics-to-move.json
+
+```shell
+cat <<EOF > topics-to-move.json
+{
+  "topics": [{ "topic": "topic-3" }],
+  "version": 1
+}
+EOF
+```
+
+Create a relocation plan by listing brokers not to be deleted
+
+```shell
+kafka-reassign-partitions.sh --zookeeper wf-kafka-cluster-zookeeper:2181 --topics-to-move-json-file topics-to-move.json --broker-list=0,1,2 --generate
+Current partition replica assignment
+{"version":1,"partitions":[{"topic":"topic-3","partition":0,"replicas":[0,3],"log_dirs":["any","any"]},{"topic":"topic-3","partition":1,"replicas":[1,0],"log_dirs":["any","any"]},{"topic":"topic-3","partition":2,"replicas":[2,1],"log_dirs":["any","any"]}]}
+
+Proposed partition reassignment configuration
+{"version":1,"partitions":[{"topic":"topic-3","partition":0,"replicas":[2,1],"log_dirs":["any","any"]},{"topic":"topic-3","partition":1,"replicas":[0,2],"log_dirs":["any","any"]},{"topic":"topic-3","partition":2,"replicas":[1,0],"log_dirs":["any","any"]}]}
+```
+
+Create expand-cluster-reassignment.json.
+
+```shell
+cat <<EOF > expand-cluster-reassignment.json
+{"version":1,"partitions":[{"topic":"topic-3","partition":0,"replicas":[2,1],"log_dirs":["any","any"]},{"topic":"topic-3","partition":1,"replicas":[0,2],"log_dirs":["any","any"]},{"topic":"topic-3","partition":2,"replicas":[1,0],"log_dirs":["any","any"]}]}
+EOF
+```
+
+Execute reassignment.
+
+```shell
+$ kafka-reassign-partitions.sh --zookeeper wf-kafka-cluster-zookeeper:2181 --reassignment-json-file expand-cluster-reassignment.json --execute
+Warning: --zookeeper is deprecated, and will be removed in a future version of Kafka.
+Current partition replica assignment
+
+{"version":1,"partitions":[{"topic":"topic-3","partition":0,"replicas":[0,3],"log_dirs":["any","any"]},{"topic":"topic-3","partition":1,"replicas":[1,0],"log_dirs":["any","any"]},{"topic":"topic-3","partition":2,"replicas":[2,1],"log_dirs":["any","any"]}]}
+
+Save this to use as the --reassignment-json-file option during rollback
+Successfully started partition reassignments for topic-3-0,topic-3-1,topic-3-2
+```
+
+Verify
+
+```shell
+$ kafka-reassign-partitions.sh --zookeeper wf-kafka-cluster-zookeeper:2181 --reassignment-json-file expand-cluster-reassignment.json --verify
+Warning: --zookeeper is deprecated, and will be removed in a future version of Kafka.
+Warning: because you are using the deprecated --zookeeper option, the results may be incomplete.  Use --bootstrap-server instead for more accurate results.
+Status of partition reassignment:
+Reassignment of partition topic-3-0 is complete.
+Reassignment of partition topic-3-1 is complete.
+Reassignment of partition topic-3-2 is complete.
+Clearing broker-level throttles on brokers 0,1,2,3
+Clearing topic-level throttles on topic topic-3
+```
+
+Describe
+
+```shell
+$ kafka-topics.sh --describe --zookeeper wf-kafka-cluster-zookeeper:2181 --topic topic-3
+Topic: topic-3  TopicId: 8psRp-LVQheM-5KYg-r4Lg PartitionCount: 3       ReplicationFactor: 2    Configs: 
+        Topic: topic-3  Partition: 0    Leader: 2       Replicas: 2,1   Isr: 1,2
+        Topic: topic-3  Partition: 1    Leader: 0       Replicas: 0,2   Isr: 0,2
+        Topic: topic-3  Partition: 2    Leader: 1       Replicas: 1,0   Isr: 1,0
+```
+
+Remove one broker. Decrease replicaCount in values.yaml to 3 in advance.
+
+```shell
+helm upgrade -n wf wf-kafka-cluster bitnami/kafka -f kafka-sts/values.yaml
+```
+
+Check the cluster
+
+```shell
+$ kubectl get po -n wf
+NAME                           READY   STATUS    RESTARTS        AGE
+wf-kafka-cluster-0             1/1     Running   0               105m
+wf-kafka-cluster-1             1/1     Running   1 (104m ago)    105m
+wf-kafka-cluster-2             1/1     Running   1 (104m ago)    105m
+wf-kafka-cluster-zookeeper-0   1/1     Running   0               105m
+```
+
+Check the ID of the running broker.
+
+```shell
+$ zookeeper-shell.sh wf-kafka-cluster-zookeeper:2181 ls /brokers/ids
+Connecting to wf-kafka-cluster-zookeeper:2181
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+[0, 1, 2]
+```
+
+Describe topic again.
+
+```
+$ kafka-topics.sh --describe --zookeeper wf-kafka-cluster-zookeeper:2181 --topic topic-3
+Topic: topic-3  TopicId: 8psRp-LVQheM-5KYg-r4Lg PartitionCount: 3       ReplicationFactor: 2    Configs: 
+        Topic: topic-3  Partition: 0    Leader: 2       Replicas: 2,1   Isr: 1,2
+        Topic: topic-3  Partition: 1    Leader: 0       Replicas: 0,2   Isr: 0,2
+        Topic: topic-3  Partition: 2    Leader: 1       Replicas: 1,0   Isr: 1,0
 ```
