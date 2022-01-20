@@ -481,10 +481,22 @@ WatchedEvent state:SyncConnected type:None path:null
 
 Describe topic again.
 
-```
+```shell
 $ kafka-topics.sh --describe --zookeeper wf-kafka-cluster-zookeeper:2181 --topic topic-3
 Topic: topic-3  TopicId: 8psRp-LVQheM-5KYg-r4Lg PartitionCount: 3       ReplicationFactor: 2    Configs: 
         Topic: topic-3  Partition: 0    Leader: 2       Replicas: 2,1   Isr: 1,2
         Topic: topic-3  Partition: 1    Leader: 0       Replicas: 0,2   Isr: 0,2
         Topic: topic-3  Partition: 2    Leader: 1       Replicas: 1,0   Isr: 1,0
+```
+
+Create a relocation plan with a list that includes non-existent brokers. Plans created did not include non-existent brokers.
+
+```shell
+$ kafka-reassign-partitions.sh --zookeeper wf-kafka-cluster-zookeeper:2181 --topics-to-move-json-file topics-to-move.json --broker-list=0,1,2,3 --generate
+Warning: --zookeeper is deprecated, and will be removed in a future version of Kafka.
+Current partition replica assignment
+{"version":1,"partitions":[{"topic":"topic-3","partition":0,"replicas":[2,1],"log_dirs":["any","any"]},{"topic":"topic-3","partition":1,"replicas":[0,2],"log_dirs":["any","any"]},{"topic":"topic-3","partition":2,"replicas":[1,0],"log_dirs":["any","any"]}]}
+
+Proposed partition reassignment configuration
+{"version":1,"partitions":[{"topic":"topic-3","partition":0,"replicas":[1,2],"log_dirs":["any","any"]},{"topic":"topic-3","partition":1,"replicas":[2,0],"log_dirs":["any","any"]},{"topic":"topic-3","partition":2,"replicas":[0,1],"log_dirs":["any","any"]}]}
 ```
