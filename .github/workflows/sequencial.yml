@@ -1,8 +1,5 @@
 name: Sequential Jobs
-on:
-  push:
-    paths:
-    - .github/workflows/sequencial.yml
+on: [workflow_dispatch]
 
 jobs:
   Build1:

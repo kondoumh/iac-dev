@@ -1,8 +1,5 @@
 name: Fork Jobs
-on:
-  push:
-    paths:
-    - .github/workflows/fork.yml
+on: [workflow_dispatch]
 
 jobs:
   Setup:

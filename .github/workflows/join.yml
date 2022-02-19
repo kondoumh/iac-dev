@@ -1,8 +1,5 @@
 name: Join Jobs
-on:
-  push:
-    paths:
-    - .github/workflows/join.yml
+on: [workflow_dispatch]
 
 jobs:
   Build1:
