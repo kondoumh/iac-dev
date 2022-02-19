@@ -17,13 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-    - run: echo Test B
+    - run: |
+        echo Test B
+        exit 1
 
   Deploy:
     runs-on: ubuntu-latest
     needs: [TestA, TestB]
     steps:
     - run: echo Deploy
+      
 
   Notify_succeed:
     if: ${{ success() }}
