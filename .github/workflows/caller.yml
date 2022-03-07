@@ -1,0 +1,6 @@
+name: Caller Job
+on: [workflow_dispatch]
+
+jobs:
+  Call:
+    uses: callee.yml
