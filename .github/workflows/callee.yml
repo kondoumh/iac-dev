@@ -1,5 +1,8 @@
 name: Callee Job
-on: []
+on:
+  push:
+    paths:
+    - .github/workflows/callee.yml
 
 jobs:
   Build1:
