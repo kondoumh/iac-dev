@@ -1,5 +1,5 @@
 name: Callee Job
-on: [push]
+on: []
 
 jobs:
   Build1:
