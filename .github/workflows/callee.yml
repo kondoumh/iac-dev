@@ -1,11 +1,8 @@
 name: Callee Job
 on:
-  push:
-    paths:
-    - .github/workflows/callee.yml
+  workflow_call:
 
 jobs:
   Build1:
-    runs-on: ubuntu-latest
     steps:
     - run: echo called!

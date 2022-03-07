@@ -2,5 +2,7 @@ name: Caller Job
 on: [workflow_dispatch]
 
 jobs:
-  Call:
-    uses: kondoumh/iac-dev/.github/workflows/callee.yml@1
+  Reuse:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: ./.github/workflows/callee.yml@1
