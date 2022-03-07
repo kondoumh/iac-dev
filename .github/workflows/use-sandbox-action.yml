@@ -1,8 +1,5 @@
 name: "Test sandbox action"
-on:
- push:
-  paths:
-  - .github/workflows/use-sandbox-action.yml
+on: [workflow_dispatch]
 
 jobs:
   call_sandbox_action:
