@@ -3,7 +3,6 @@ on: [workflow_dispatch]
 
 jobs:
   Reuse:
-    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/workflows/callee.yml@1
+    - uses: ./.github/workflows/callee.yml
