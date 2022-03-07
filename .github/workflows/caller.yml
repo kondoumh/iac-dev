@@ -3,4 +3,4 @@ on: [workflow_dispatch]
 
 jobs:
   Call:
-    uses: callee.yml@1
+    uses: .github/workflows/callee.yml@1
