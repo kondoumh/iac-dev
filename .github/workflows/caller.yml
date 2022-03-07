@@ -3,4 +3,4 @@ on: [workflow_dispatch]
 
 jobs:
   Call:
-    uses: kondoumh/iac-dev/workflows/callee.yml@1
+    uses: kondoumh/iac-dev/.github/workflows/callee.yml@1
