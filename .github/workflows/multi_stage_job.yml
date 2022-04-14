@@ -40,6 +40,7 @@ jobs:
     - name: Test B
       run: |
         echo Test B
+        exit 1
     - id: check
       if: ${{ always() }}
       run: echo "::set-output name=message::Test B ${{ (job.status == 'success' && '✅') || '❌' }}"
