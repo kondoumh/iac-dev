@@ -16,4 +16,3 @@ jobs:
             project init
             project update
             do build
-  
