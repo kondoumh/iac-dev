@@ -13,6 +13,7 @@ jobs:
           version: 0.2
           workdir: dagger/todoapp
           cmds: |
+            project init
             project update
             do build
   
