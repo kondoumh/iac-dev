@@ -15,7 +15,10 @@ jobs:
       run: echo Build
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Build ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: |
+        echo "::set-output name=message::Build ${{ (job.status == 'success' && '✅') || '❌' }}"
+        echo "- Build : ${{ (job.status == 'success' && '✅') || '❌' }}" >> $GITHUB_STEP_SUMMARY"
+
 
   TestA:
     runs-on: ubuntu-latest
@@ -28,7 +31,9 @@ jobs:
       run: echo Test A
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Test A ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: |
+        echo "::set-output name=message::Test A ${{ (job.status == 'success' && '✅') || '❌' }}"
+        echo "- TestA : ${{ (job.status == 'success' && '✅') || '❌' }}" >> $GITHUB_STEP_SUMMARY"
 
   TestB:
     runs-on: ubuntu-latest
@@ -43,7 +48,9 @@ jobs:
         exit 1
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Test B ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: |
+        echo "::set-output name=message::Test B ${{ (job.status == 'success' && '✅') || '❌' }}"
+        echo "- TestB : ${{ (job.status == 'success' && '✅') || '❌' }}" >> $GITHUB_STEP_SUMMARY"
 
   Deploy:
     runs-on: ubuntu-latest
@@ -55,7 +62,9 @@ jobs:
       run: echo Deploy
     - id: check
       if: ${{ always() }}
-      run: echo "::set-output name=message::Deploy ${{ (job.status == 'success' && '✅') || '❌' }}"
+      run: |
+        echo "::set-output name=message::Deploy ${{ (job.status == 'success' && '✅') || '❌' }}"
+        echo "- Deploy : ${{ (job.status == 'success' && '✅') || '❌' }}" >> $GITHUB_STEP_SUMMARY"
 
   Notify_succeed:
     if: ${{ success() }}
