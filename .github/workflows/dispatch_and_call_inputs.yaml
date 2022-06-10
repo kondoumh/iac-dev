@@ -23,7 +23,7 @@ on:
         description: 'Log level'
         required: true
         default: 'warning'
-        type: choice
+        type: string
       tags:
         description: 'Test scenario tags'
         required: false
