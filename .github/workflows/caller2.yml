@@ -3,7 +3,7 @@ on: [workflow_dispatch]
 
 jobs:
   Reuse:
-    uses: ./.github/workflows/dispatch_and_call_inputs.yml
+    uses: ./.github/workflows/dispatch_and_call_inputs.yaml
     with:
       loglevel: info
       tags: false
