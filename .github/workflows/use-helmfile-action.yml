@@ -1,16 +1,13 @@
 name: Use helmfile
-on:
-  push:
-    paths:
-      - .github/workflows/use-helmfile-action.yml
+on: [workflow_dispach]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup helmfile
-      uses: mamezou-tech/setup-helmfile@v0.1.0
+      uses: mamezou-tech/setup-helmfile@v1
     - name: Test
       run: |
         helmfile --version
