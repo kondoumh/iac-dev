@@ -1,5 +1,5 @@
 name: Use helmfile
-on: [workflow_dispach]
+on: [workflow_dispatch]
 
 jobs:
   build:
