@@ -11,15 +11,18 @@ on:
         type: boolean
         description: Include emojis
 
+
 jobs:
   printInputs:
     runs-on: ubuntu-latest
+    env:
+      USE_EMOJI: ${{ inputs.use-emoji }}
     steps:
     - name: Echo inputs
       run: |
         echo "Log level: ${{ inputs.logLevel }}"
         echo "Tags: ${{ inputs.tags }}" 
-        echo "Use emojis: ${{ inputs.use-emoji }}"
+        echo "Use emojis: ${{ env.USE_EMOJI }}"
     - name: Echo emoji
-      if: inputs.use-emoji
+      if: ${{ env.USE_EMOJI == 'true' }}
       run: echo "🚀🚀🚀"
