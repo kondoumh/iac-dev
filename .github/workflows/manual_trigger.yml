@@ -7,6 +7,9 @@ on:
         default: 'warning'
       tags:
         description: 'Test scenario tags'
+      use-emoji:
+        type: boolean
+        description: Include emojis
 
 jobs:
   printInputs:
@@ -15,3 +18,4 @@ jobs:
     - run: |
         echo "Log level: ${{ inputs.logLevel }}"
         echo "Tags: ${{ inputs.tags }}" 
+        echo "Use emojis: ${{ inputs.use-emoji }}"
