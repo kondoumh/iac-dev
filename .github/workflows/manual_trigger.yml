@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Echo inputs
-    - run: |
+      run: |
         echo "Log level: ${{ inputs.logLevel }}"
         echo "Tags: ${{ inputs.tags }}" 
         echo "Use emojis: ${{ inputs.use-emoji }}"
     - name: Echo emoji
       if: inputs.use-emoji
-      run: echo 🚀🚀🚀
+      run: echo "🚀🚀🚀"
