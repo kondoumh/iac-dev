@@ -4,6 +4,10 @@ on: [workflow_dispatch]
 
 jobs:
   Build:
-    runs-on: self-hosted
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, macos-latest, self-hosted]
+
     steps:
-    - run: echo 'This job is running on self-hosted runner!!'
+    - run: echo 'This job is running on ${{ matrix.runner }} runner!!'
