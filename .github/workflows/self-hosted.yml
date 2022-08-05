@@ -6,4 +6,4 @@ jobs:
   Build:
     runs-on: self-hosted
     steps:
-    - run: echo Build1
+    - run: echo 'This job is running on self-hosted runner!!'
