@@ -1,0 +1,13 @@
+name: Dploy with matrix strategy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ReuseableMatrixJobForDeployment:
+    strategy:
+      matrix:
+        target: [dev, stage, prod]
+    uses: kondoumh/iac-dev/.github/workflows/deployment.yml@master
+    with:
+      target: ${{ matrix.target }}
