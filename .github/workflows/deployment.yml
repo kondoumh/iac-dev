@@ -18,4 +18,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name:
-        run: echo "Build for target: $TARGET"
+        run: echo "Build for target $TARGET"
