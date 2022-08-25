@@ -13,14 +13,12 @@ env:
 
 jobs:
 
-  Build:
-    uses: kondoumh/iac-dev/.github/workflows/build-reusable.yml@master
-    with:
-      target: ${{ inputs.target }}
-
-  Deploy:
+  build:
     runs-on: ubuntu-latest
-    needs: Build
     steps:
+      - name: Build
+        run: echo "Build for $TARGET environment"
+      - name: Package
+        run: echo "Package for $TARGET environment"
       - name: Deploy
         run: echo "Deploy to $TARGET environment"
