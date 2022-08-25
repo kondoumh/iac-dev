@@ -16,7 +16,7 @@ jobs:
   Build:
     uses: kondoumh/iac-dev/.github/workflows/build-reusable.yml@master
     with:
-      target: $TARGET
+      target: ${{ inputs.target }}
 
   Deploy:
     runs-on: ubuntu-latest
