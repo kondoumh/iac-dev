@@ -6,7 +6,6 @@ on:
       target:
         description: 'Target to deploy app'
         required: true
-        default: 'dev'
         type: string
 
 env:
@@ -15,7 +14,6 @@ env:
 jobs:
 
   Build:
-    runs-on: ubuntu-latest
     uses: kondoumh/iac-dev/.github/workflows/build-reusable.yml@master
     with:
       target: $TARGET

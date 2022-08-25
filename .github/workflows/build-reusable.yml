@@ -6,7 +6,6 @@ on:
       target:
         description: 'Target to deploy app'
         required: true
-        default: 'dev'
         type: string
 
 env:
