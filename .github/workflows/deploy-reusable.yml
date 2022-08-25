@@ -1,0 +1,21 @@
+name: Reusable deploy workflow
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        description: 'Target to deploy app'
+        required: true
+        default: 'dev'
+        type: string
+
+env:
+  TARGET: ${{ inputs.target }}
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploy to $TARGET environment"

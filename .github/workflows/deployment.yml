@@ -22,4 +22,6 @@ jobs:
       - name: Package
         run: echo "Package for $TARGET environment"
       - name: Deploy
-        run: echo "Deploy to $TARGET environment"
+        uses: kondoumh/iac-dev/.github/workflows/deploy-reusable.yml@master
+        with:
+          target: ${{ inputs.target }}
