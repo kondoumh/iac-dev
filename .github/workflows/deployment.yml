@@ -17,5 +17,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name:
-        run: echo "Build for target $TARGET"
+      - name: Build
+        run: echo "Build for $TARGET environment"
+      - name: Package
+        run: echo "Package for $TARGET environment"
+      - name: Package
+        run: echo "Package for $TARGET environment"
+      - name: Deploy
+        run: echo "Deploy to $TARGET environment"
