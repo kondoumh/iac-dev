@@ -6,3 +6,6 @@ on:
 jobs:
   UseReusableFlow:
     uses: kondoumh/iac-dev/.github/workflows/reusable-flow.yml@master
+    with:
+      param1: hoge
+   

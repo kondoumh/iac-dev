@@ -2,10 +2,15 @@ name: Reusable workflow B
 
 on:
   workflow_call:
+    inputs:
+      param1:
+        description: 'Param1'
+        required: true
+        type: string
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Echo
-        run: echo called from reusable flow!
+        run: echo "called from reusable flow with param ${{ inputs.param1 }}!"

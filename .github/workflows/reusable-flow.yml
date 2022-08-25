@@ -2,7 +2,14 @@ name: Reusable workflow A
 
 on:
   workflow_call:
+    inputs:
+      param1:
+        description: 'Param1'
+        required: true
+        type: string
 
 jobs:
   call-another-reusable:
     uses: kondoumh/iac-dev/.github/workflows/reusable-nested-flow.yml@master
+    with:
+      param1: ${{ inputs.param1 }}
