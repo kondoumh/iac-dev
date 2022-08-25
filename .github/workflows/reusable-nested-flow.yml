@@ -1,0 +1,10 @@
+name: Reusable workflow B
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    steps:
+      - name: Echo
+        run: echo "Build for $TARGET environment"

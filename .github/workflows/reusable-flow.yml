@@ -1,0 +1,8 @@
+name: Reusable workflow A
+
+on:
+  workflow_call:
+
+jobs:
+  call-another-reusable:
+    uses: kondoumh/iac-dev/.github/workflows/reusable-nested-flow.yml@master
