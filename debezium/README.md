@@ -195,3 +195,13 @@ kubectl apply -f kafka-connect-deploy.yaml -n wf
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:30500/connectors/ -d @register-postgres-k8s.json
 ```
 
+
+## Using docker-compose
+
+```
+docker-compose up -d
+```
+
+```
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors -d @register-postgres-docker.json
+```
