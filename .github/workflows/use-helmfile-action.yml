@@ -5,11 +5,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup helmfile
-      uses: mamezou-tech/setup-helmfile@v1.0.0
+      uses: mamezou-tech/setup-helmfile@v1.1.0
+      with:
+        helmfile-version: "v0.148.1"
+        helm-version: "v3.10.2"
+        kubectl-version: "1.25.4"
+        kubectl-release-date: "2022-11-09"
+
     - name: Test
       run: |
+        kubectl version --client
         helmfile --version
         helm version
-        kubectl version --client
+        helm plugin list
