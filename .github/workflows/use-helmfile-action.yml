@@ -11,8 +11,8 @@ jobs:
       with:
         helmfile-version: "v0.148.1"
         helm-version: "v3.10.2"
-        kubectl-version: "1.25.4"
-        kubectl-release-date: "2022-11-09"
+        # kubectl-version: "1.25.4"
+        # kubectl-release-date: "2022-11-09"
 
     - name: Test
       run: |
