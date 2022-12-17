@@ -1,4 +1,4 @@
-name: Use reusable flow
+name: Use reusable flow in another private repo
 
 on:
   workflow_dispatch:
