@@ -1,0 +1,10 @@
+name: Use reusable flow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  UseReusableFlow:
+    uses: kondoumh/shared-workflows/.github/workflows/deploy.yml@main
+    with:
+      target: dev
