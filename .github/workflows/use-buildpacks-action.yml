@@ -22,3 +22,5 @@ jobs:
         path: 'samples/apps/bash-script/'
         builder: 'cnbs/sample-builder:alpine'
         #publish: true
+    - name: Push image
+        run: docker push ghcr.io/kondoumh/sample-bash-app:latest
