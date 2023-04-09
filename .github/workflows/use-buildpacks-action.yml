@@ -21,4 +21,4 @@ jobs:
         image: 'ghcr.io/kondoumh/sample-bash-app'
         path: 'samples/apps/bash-script/'
         builder: 'cnbs/sample-builder:alpine'
-        publish: true
+        #publish: true
