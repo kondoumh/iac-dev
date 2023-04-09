@@ -1,0 +1,21 @@
+name: Use Buildpacks action
+on: [workflow_dispatch]
+
+jobs:
+  build-bash-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout buildpacks/samples
+      uses: actions/checkout@v3
+      with:
+        repository: buildpacks/samples
+        path: samples
+    - name: Docker login
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Build and push image
+      uses: mamezou-tech/buildpacks-action@master
+      with:
+        image: 'ghcr.io/kondoumh/sample-bash-app'
+        path: 'samples/apps/bash-script/'
+        builder: 'cnbs/sample-builder:alpine'
+        publish: true
