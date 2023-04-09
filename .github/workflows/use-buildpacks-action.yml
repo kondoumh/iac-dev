@@ -1,6 +1,9 @@
 name: Use Buildpacks action
 on: [workflow_dispatch]
 
+permissions:
+  packages: write
+
 jobs:
   build-bash-app:
     runs-on: ubuntu-latest
