@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: electron-example-browserview
-        path: electron-example-browserview/dist/**/*.AppImage
+        path: electron-example-browserview/dist/**
