@@ -1,0 +1,29 @@
+name: Build electron app Linux installer with Actions Runner Controller
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: arc-runner-set
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: 'mamezou-tech/electron-example-browserview'
+        path: electron-example-browserview      
+    - name: Setup nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install dependencies
+      run: |
+        cd electron-example-browserview
+        npm install
+    - name: Package
+      run: |
+        cd electron-example-browserview
+        npx electron-builder --dir
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
