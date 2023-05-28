@@ -1,11 +1,13 @@
 version: '3'
 services:
   prometheus:
-    image: prom/prometheus:v2.35.0
+    image: prom/prometheus:v2.44.0
     network_mode: host
     container_name: prometheus
     restart: unless-stopped
     volumes:
       - ./data/prometheus/config:/etc/prometheus/
+    ports:
+      - 9090:9090
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
