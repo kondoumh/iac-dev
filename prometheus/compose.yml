@@ -1,10 +1,13 @@
 version: '3'
 services:
+  boot-bench:
+    image: boot-bench
+    container_name: boot-bench
+    ports:
+      - 5001:5001
   prometheus:
     image: prom/prometheus:v2.44.0
-    network_mode: host
     container_name: prometheus
-    restart: unless-stopped
     volumes:
       - ./data/prometheus/config:/etc/prometheus/
     ports:
