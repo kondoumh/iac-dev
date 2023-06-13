@@ -10,4 +10,4 @@ RUN tar --extract --file $JAVA_HOME/openjdk.tar.gz --directory "$JAVA_HOME" --st
 
 RUN mkdir -p /opt/crac-files
 
-COPY build/libs/MY-APP.jar /opt/app/MY-APP.jar
+COPY crac-spring-boot-trial/build/libs/crac-spring-boot-trial-0.0.1-SNAPSHOT.jar /opt/app/app.jar
