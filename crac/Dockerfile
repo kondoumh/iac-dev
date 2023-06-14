@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:20.04
 
 ENV JAVA_HOME /opt/jdk
 ENV PATH $JAVA_HOME/bin:$PATH
@@ -10,4 +10,7 @@ RUN tar --extract --file $JAVA_HOME/openjdk.tar.gz --directory "$JAVA_HOME" --st
 
 RUN mkdir -p /opt/crac-files
 
-COPY crac-spring-boot-trial/build/libs/crac-spring-boot-trial-0.0.1-SNAPSHOT.jar /opt/app/app.jar
+# COPY crac-spring-boot-trial/build/libs/crac-spring-boot-trial-0.0.1-SNAPSHOT.jar /opt/app/app.jar
+
+COPY example-jetty/target/example-jetty-1.0-SNAPSHOT.jar /opt/app/app.jar
+COPY example-jetty/target/dependency /opt/app/dependency
