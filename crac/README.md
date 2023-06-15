@@ -2,7 +2,7 @@
 
 ## Manualy create snapshot
 ```shell
-docker build -t . crac-spring-boot-trial
+docker build . -t crac-spring-boot-trial
 ```
 
 ```shell
@@ -36,4 +36,22 @@ $ jps
 14 app.jar
 
 jcmd /opt/app/app.jar JDK.checkpoint
+```
+
+```shell
+$ ls /opt/crac-files/
+core-10.img core-14.img ...
+```
+
+```shell
+CONTAINER_ID=$(docker ps | grep crac | awk '{print $1}')
+docker commit $CONTAINER_ID crac-spring-boot-trial:checkpoint
+```
+
+```shell
+docker run -it --privileged --rm -p 5001:5001 --name=crac-spring-boot-trial crac-spring-boot-trial:checkpoint
+```
+
+```shell
+$ java -XX:CRaCRestoreFrom=/opt/crac-files/
 ```
