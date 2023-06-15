@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class ConsoleCounterApplication {
 
-	public static void main(String[] args) {
-		var context = SpringApplication.run(ConsoleCounterApplication.class, args);
+    public static void main(String[] args) {
+        var context = SpringApplication.run(ConsoleCounterApplication.class, args);
         var counter = context.getBean(Counter.class);
         while (true) {
             try {
@@ -17,11 +17,12 @@ public class ConsoleCounterApplication {
                 break;
             }
             counter.increment();
-            System.out.println("Count: " + counter.getCount());
+            System.out.println("Count: " + counter.getCount() + " Stage: " + counter.getDeployStage());
         }
-	}
+    }
 
     @Bean
     public Counter counter() {
         return new Counter();
-    }}
+    }
+}

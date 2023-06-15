@@ -1,0 +1,2 @@
+deploy:
+  stage: ${DEPLOY_STAGE:local}
