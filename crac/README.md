@@ -49,9 +49,6 @@ docker commit $CONTAINER_ID crac-spring-boot-trial:checkpoint
 ```
 
 ```shell
-docker run -it --privileged --rm -p 5001:5001 --name=crac-spring-boot-trial crac-spring-boot-trial:checkpoint
+docker run -it --privileged --rm -p 5001:5001 --name=crac-spring-boot-trial crac-spring-boot-trial:checkpoint java -XX:CRaCRestoreFrom=/opt/crac-files
 ```
 
-```shell
-$ java -XX:CRaCRestoreFrom=/opt/crac-files/
-```
