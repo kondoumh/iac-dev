@@ -53,6 +53,7 @@ class ServerManager implements Resource
 public class App extends AbstractHandler
 {
     static ServerManager serverManager;
+    private Counter counter = new Counter();
 
     public void handle(String target,
                        Request baseRequest,
@@ -63,7 +64,14 @@ public class App extends AbstractHandler
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
-        response.getWriter().println("Hello World");
+        response.getWriter().println("Hello World. " + counter.getValue() + " times.");
+    }
+
+    private static class Counter {
+        private int value = 0;
+        public int getValue() {
+            return ++value;
+        }
     }
 
     public static void main( String[] args ) throws Exception
