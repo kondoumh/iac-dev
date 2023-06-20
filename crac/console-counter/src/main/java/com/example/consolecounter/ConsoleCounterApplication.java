@@ -9,6 +9,7 @@ public class ConsoleCounterApplication {
     public static void main(String[] args) {
         var context = SpringApplication.run(ConsoleCounterApplication.class, args);
         var counter = context.getBean(Counter.class);
+        var env = context.getBean(Env.class);
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -16,7 +17,7 @@ public class ConsoleCounterApplication {
                 break;
             }
             counter.increment();
-            System.out.println("Count: " + counter.getCount() + " Stage: " + counter.getDeployStage());
+            System.out.println("Count: " + counter.getCount() + " Stage: " + env.getDeployStage());
         }
     }
 }
