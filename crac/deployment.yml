@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: example-jetty
+  name: example-jetty
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-jetty
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: example-jetty
+    spec:
+      containers:
+      - image: crac-spring-boot-trial:checkpoint
+        name: example-jetty
+        command: ["java"]
+        args: ["-XX:CRaCRestoreFrom=/opt/crac-files"]
+        resources: {}
+        env:
+          - name: TZ
+            value: Asia/Tokyo
+
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: example-jetty
+  name: example-jetty
+spec:
+  ports:
+  - name: 5001-5001
+    port: 5001
+    protocol: TCP
+    targetPort: 5001
+  selector:
+    app: example-jetty
+  type: ClusterIP
+status:
+  loadBalancer: {}
