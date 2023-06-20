@@ -2,11 +2,11 @@
 
 ## Manualy create snapshot
 ```shell
-docker build . -t crac-spring-boot-trial
+docker build . -t crac-jetty-trial
 ```
 
 ```shell
-docker run -it --privileged --rm -p 5001:5001 --name=crac-spring-boot-trial crac-spring-boot-trial
+docker run -it --privileged --rm -p 5001:5001 --name=crac-jetty-trial crac-jetty-trial
 ```
 
 ```shell
@@ -27,7 +27,7 @@ Hello World. 5 times.
 ```
 
 ```shell
-docker exec -it -u root crac-spring-boot-trial /bin/bash
+docker exec -it -u root crac-jetty-trial /bin/bash
 ```
 
 ```shell
@@ -48,17 +48,17 @@ core-13.img  core-17.img  core-21.img  core-25.img  core-67.img  core-9.img   fi
 
 ```shell
 CONTAINER_ID=$(docker ps | grep crac | awk '{print $1}')
-docker commit $CONTAINER_ID crac-spring-boot-trial:checkpoint
+docker commit $CONTAINER_ID crac-jetty-trial:checkpoint
 ```
 
 ```shell
-docker run -it --privileged --rm -p 5001:5001 --name=crac-spring-boot-trial crac-spring-boot-trial:checkpoint java -XX:CRaCRestoreFrom=/opt/crac-files
+docker run -it --privileged --rm -p 5001:5001 --name=crac-jetty-trial crac-jetty-trial:checkpoint java -XX:CRaCRestoreFrom=/opt/crac-files
 ```
 
 ## Create deployment (kind)
 
 ```shell
-kind load docker-image crac-spring-boot-trial:checkpoint
+kind load docker-image crac-jetty-trial:checkpoint
 ```
 
 ```shell
