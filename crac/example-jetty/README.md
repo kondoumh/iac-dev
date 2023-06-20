@@ -48,7 +48,11 @@ core-13.img  core-17.img  core-21.img  core-25.img  core-67.img  core-9.img   fi
 
 ```shell
 CONTAINER_ID=$(docker ps | grep crac | awk '{print $1}')
-docker commit $CONTAINER_ID crac-jetty-trial:checkpoint
+```
+
+```shell
+$ docker commit $CONTAINER_ID crac-jetty-trial:checkpoint
+sha256:d623fd7cf6a2cc87a7dcb6b92bfc1c14e7cab54a33b792ba5b82f0627c6cd615
 ```
 
 ```shell

@@ -16,7 +16,7 @@ spec:
         app: example-jetty
     spec:
       containers:
-      - image: crac-spring-boot-trial:checkpoint
+      - image: crac-jetty-trial:checkpoint
         imagePullPolicy: Never
         name: example-jetty
         command: ["java"]
