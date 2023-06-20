@@ -69,3 +69,8 @@ kubectl apply -f deployment.yml
 POD=$(kubectl get pod -l app=example-jetty -o jsonpath="{.items[0].metadata.name}")
 kubectl port-forward $POD 5001:5001
 ```
+
+```shell
+$ curl localhost:5001
+Hello World. 6 times.
+```
