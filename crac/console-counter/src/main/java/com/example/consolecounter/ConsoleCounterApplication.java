@@ -2,7 +2,6 @@ package com.example.consolecounter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class ConsoleCounterApplication {
@@ -19,10 +18,5 @@ public class ConsoleCounterApplication {
             counter.increment();
             System.out.println("Count: " + counter.getCount() + " Stage: " + counter.getDeployStage());
         }
-    }
-
-    @Bean
-    public Counter counter() {
-        return new Counter();
     }
 }
