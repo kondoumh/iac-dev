@@ -17,31 +17,13 @@ spec:
     spec:
       containers:
       - image: crac-spring-boot-trial:checkpoint
+        imagePullPolicy: Never
         name: example-jetty
         command: ["java"]
         args: ["-XX:CRaCRestoreFrom=/opt/crac-files"]
+        securityContext:
+          privileged: true
         resources: {}
         env:
           - name: TZ
             value: Asia/Tokyo
-
-status: {}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: example-jetty
-  name: example-jetty
-spec:
-  ports:
-  - name: 5001-5001
-    port: 5001
-    protocol: TCP
-    targetPort: 5001
-  selector:
-    app: example-jetty
-  type: ClusterIP
-status:
-  loadBalancer: {}

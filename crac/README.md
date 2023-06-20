@@ -55,4 +55,17 @@ docker commit $CONTAINER_ID crac-spring-boot-trial:checkpoint
 docker run -it --privileged --rm -p 5001:5001 --name=crac-spring-boot-trial crac-spring-boot-trial:checkpoint java -XX:CRaCRestoreFrom=/opt/crac-files
 ```
 
-## Create deployment
+## Create deployment (kind)
+
+```shell
+kind load docker-image crac-spring-boot-trial:checkpoint
+```
+
+```shell
+kubectl apply -f deployment.yml
+```
+
+```shell
+POD=$(kubectl get pod -l app=example-jetty -o jsonpath="{.items[0].metadata.name}")
+kubectl port-forward $POD 5001:5001
+```
