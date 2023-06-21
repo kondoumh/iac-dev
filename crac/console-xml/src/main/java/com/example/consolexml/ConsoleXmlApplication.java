@@ -8,9 +8,5 @@ public class ConsoleXmlApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConsoleXmlApplication.class, args);
-		var marshaler = new HogeMarshaler();
-		marshaler.marshal();
-		var hoge = marshaler.unmarshal();
-		System.out.println(hoge);
 	}
 }
