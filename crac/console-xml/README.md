@@ -27,5 +27,5 @@ docker commit $CONTAINER_ID crac-console-xml:checkpoint
 ```
 
 ```shell
-docker run -it -e DEPLOY_STAGE=container --privileged --rm --name=crac-console-xml crac-console-xml:checkpoint java -XX:CRaCRestoreFrom=/opt/crac-files
+docker run -it --privileged --rm --name=crac-console-xml crac-console-xml:checkpoint java -XX:CRaCRestoreFrom=/opt/crac-files
 ```
