@@ -6,10 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - name: sandbox action
-      id: hello
-      uses: kondoumh/sandbox-action@master
-      with:
-        who-to-greet: 'Mona the Octocat'
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+        with:
+          config: ${{ vars.PERMISSIONS_CONFIG }}
+      - name: sandbox action
+        id: hello
+        uses: kondoumh/sandbox-action@master
+        with:
+          who-to-greet: 'Mona the Octocat'
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
