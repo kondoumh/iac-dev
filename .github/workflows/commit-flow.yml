@@ -3,6 +3,9 @@ on: [workflow_dispatch]
 
 jobs:
   Build:
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
 
     steps:
