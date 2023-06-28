@@ -8,9 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: |
-      git config --global user.name "github-actions[bot]"
-      git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      echo "Hello! now is $(date)" >> _artifacts/hello.txt
-      git add _artifacts/hello.txt
-      git commit -m "Add hello.txt"
-      git push
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        echo "Hello! now is $(date)" >> _artifacts/hello.txt
+        git add _artifacts/hello.txt
+        git commit -m "Add hello.txt"
+        git push
