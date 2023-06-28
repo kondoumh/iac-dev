@@ -1,15 +1,9 @@
-on:
- push:
-  paths:
-  - .github/workflows/upload.yml
+on: [workflow_dispatch]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
-      with:
-        config: ${{ vars.PERMISSIONS_CONFIG }}
     - uses: actions/checkout@master
     - name: Create artifact
       run: echo hello > hello.txt
