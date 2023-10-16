@@ -25,3 +25,7 @@ pod/release-k8sgpt-operator-controller-manager-5967d7b996-5khd5   2/2     Runnin
 NAME                                                              TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)    AGE
 service/release-k8sgpt-opera-controller-manager-metrics-service   ClusterIP   192.168.194.157   <none>        8443/TCP   7m3s
 ```
+
+```shell
+kubectl create secret generic k8sgpt-sample-secret --from-literal=openai-api-key=$OPENAI_TOKEN -n k8sgpt-operator-system
+```
