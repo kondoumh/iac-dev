@@ -13,14 +13,15 @@ jobs:
     steps:
     - name: Build artifact
       run: |
-        echo "Hello! now is $(date)" >> hello.txt
-        tar -czf _artifacts/hello.tar.gz hello.txt
+        mkdir -p _artifacts
+        echo "Hello! now is $(date)" >> _artifacts/hello.txt
+        tar -czf hello.tar.gz _artifacts
     - name: Generate artifact attestation
       uses: actions/attest-build-provenance@v1
       with:
-        subject-path: '_artifacts/hello.tar.gz'
+        subject-path: 'hello.tar.gz'
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: hello
-        path: _artifacts/hello.tar.gz
+        path: hello.tar.gz
