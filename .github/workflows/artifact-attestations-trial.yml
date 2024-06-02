@@ -1,0 +1,26 @@
+name: Artifact Attestations Trial
+on: [workflow_dispatch]
+
+jobs:
+  Build:
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Build artifact
+      run: |
+        echo "Hello! now is $(date)" >> hello.txt
+        tar -czf _artifacts/hello.tar.gz hello.txt
+    - name: Generate artifact attestation
+      uses: actions/attest-build-provenance@v1
+      with:
+        subject-path: '_artifacts/hello.tar.gz'
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: hello
+        path: _artifacts/hello.tar.gz
