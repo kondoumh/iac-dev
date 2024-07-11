@@ -16,6 +16,29 @@ https://trino.io/docs/current/installation/deployment.html#java-runtime-environm
 
 ## Docker
 
+```shell
+docker compose up
+```
+
+Run Trino CLI
+
+```shell
+docker compose exec -it trino trino
+```
+
+Execute query
+
+```shell
+trino> select count(*) from postgresql.bm.user;
+ _col0 
+-------
+ 50000 
+(1 row)
+
+Query 20240711_065651_00006_8wfbu, FINISHED, 1 node
+Splits: 1 total, 1 done (100.00%)
+0.16 [1 rows, 0B] [6 rows/s, 0B/s]
+```
 
 ## Kubernetes
 
