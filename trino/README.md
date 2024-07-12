@@ -42,13 +42,21 @@ Splits: 1 total, 1 done (100.00%)
 
 ## Kubernetes
 
-```shell
-helm repo add trino https://trinodb.github.io/charts
-```
+install
 
 ```shell
+helm repo add trino https://trinodb.github.io/charts
 helm install -f values.yml example-trino-cluster trino/trino
 ```
+
+port fowrading
+
+```shell
+export POD_NAME=$(kubectl get pods --namespace default --selector "app.kubernetes.io/name=trino,app.kubernetes.io/instance=example-trino-cluster,app.kubernetes.io/component=coordinator" --output name)
+kubectl port-forward $POD_NAME 8080:8080
+```
+
+WebUI localhost:8080
 
 ## Trino CLI
 
