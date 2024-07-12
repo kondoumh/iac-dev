@@ -49,3 +49,19 @@ helm repo add trino https://trinodb.github.io/charts
 ```shell
 helm install -f values.yml example-trino-cluster trino/trino
 ```
+
+## Trino CLI
+
+install
+
+```shel
+curl -LO https://repo1.maven.org/maven2/io/trino/trino-cli/452/trino-cli-452-executable.jar
+mv trino-cli-452-executable.jar trino
+chmod +x trino
+```
+
+execute Trino
+
+```shell
+ ./trino --server http://localhost:8080
+```
