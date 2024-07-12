@@ -8,3 +8,10 @@ coordinator:
 worker:
   jvm:
     maxHeapSize: "8G"
+
+additionalCatalogs:
+  postgres: |-
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://host.docker.internal:5432/bmdb
+    connection-user=postgres
+    connection-password=postgres
