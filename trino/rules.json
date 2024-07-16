@@ -1,0 +1,28 @@
+{
+  "tables": [
+    {
+      "user": "kondoh",
+      "catalog": "wfdb",
+      "schema": "wf",
+      "table": "task_master",
+      "privileges": []
+    },
+    {
+      "user": "kondoh",
+      "catalog": "wfdb",
+      "schema": "wf",
+      "table": "flow_master",
+      "privileges": ["SELECT"],
+      "columns": [
+        {
+          "name": "flow_property_set_id",
+          "allow": false
+        },
+        {
+          "name": "activation_ts",
+          "allow": false
+        }
+      ]
+    }
+  ]
+}
