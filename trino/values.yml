@@ -10,65 +10,49 @@ worker:
     maxHeapSize: "8G"
 
 additionalCatalogs:
-  postgres: |-
+  bmdb: |-
     connector.name=postgresql
     connection-url=jdbc:postgresql://host.docker.internal:5432/bmdb
     connection-user=postgres
     connection-password=postgres
+  wfdb: |-
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://host.docker.internal:5432/wfdb
+    connection-user=postgres
+    connection-password=postgres
 
-# accessControl -- [System access
-# control](https://trino.io/docs/current/security/built-in-system-access-control.html)
-# configuration.
-# @raw
-# Example:
-# ```yaml
-#  type: configmap
-#  refreshPeriod: 60s
-#  # Rules file is mounted to /etc/trino/access-control
-#  configFile: "rules.json"
-#  rules:
-#    rules.json: |-
-#      {
-#        "catalogs": [
-#          {
-#            "user": "admin",
-#            "catalog": "(mysql|system)",
-#            "allow": "all"
-#          },
-#          {
-#            "group": "finance|human_resources",
-#            "catalog": "postgres",
-#            "allow": true
-#          },
-#          {
-#            "catalog": "hive",
-#            "allow": "all"
-#          },
-#          {
-#            "user": "alice",
-#            "catalog": "postgresql",
-#            "allow": "read-only"
-#          },
-#          {
-#            "catalog": "system",
-#            "allow": "none"
-#          }
-#        ],
-#        "schemas": [
-#          {
-#            "user": "admin",
-#            "schema": ".*",
-#            "owner": true
-#          },
-#          {
-#            "user": "guest",
-#            "owner": false
-#          },
-#          {
-#            "catalog": "default",
-#            "schema": "default",
-#            "owner": true
-#          }
-#        ]
-#      }
-# ```
+accessControl:
+  type: configmap
+  refreshPeriod: 60s
+  # Rules file is mounted to /etc/trino/access-control
+  configFile: "rules.json"
+  rules:
+    rules.json: |-
+      {
+        "tables": [
+          {
+            "user": "kondoh",
+            "catalog": "wfdb",
+            "schema": "wf",
+            "table": "task_master",
+            "privileges": []
+          },
+          {
+            "user": "kondoh",
+            "catalog": "wfdb",
+            "schema": "wf",
+            "table": "flow_master",
+            "privileges": ["SELECT"],
+            "columns": [
+              {
+                "name": "flow_property_set_id",
+                "allow": false
+              },
+              {
+                "name": "activation_ts",
+                "allow": false
+              }
+            ]
+          }
+        ]
+      }
