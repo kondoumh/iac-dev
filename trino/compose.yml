@@ -5,5 +5,5 @@ services:
       - '8080:8080'
     volumes:
       - ${PWD}/catalog:/etc/trino/catalog
-      - ${PWD}/access-control.properties:/etc/trino/access-control.properties
-      - ${PWD}/rules.json:/etc/trino/rules.json
+      # - ${PWD}/access-control.properties:/etc/trino/access-control.properties
+      # - ${PWD}/rules.json:/etc/trino/rules.json
